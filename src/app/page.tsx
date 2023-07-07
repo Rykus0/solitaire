@@ -1,37 +1,32 @@
 "use client";
 
-import { DragEvent } from "react";
+import { type DragEvent } from "react";
 import classes from "./page.module.css";
+import Card from "./components/Card";
 
 export default function Home() {
   function dragCardStart(e: DragEvent<HTMLDivElement>) {
     const target = e.target as HTMLDivElement;
-    console.log("drag");
     e.dataTransfer.clearData();
     e.dataTransfer.setData("text/plain", target.id);
   }
 
-  function dragEnter(e: DragEvent<HTMLDivElement>) {
-    console.log("enter");
-    e.preventDefault();
-  }
-
   function dragOver(e: DragEvent<HTMLDivElement>) {
-    console.log("over");
     e.preventDefault();
   }
 
   function dropCard(e: DragEvent<HTMLDivElement>) {
     e.preventDefault();
-    console.log("drop");
 
     const id = e.dataTransfer?.getData("text");
+    const target = e.currentTarget as HTMLDivElement;
+    console.log(target);
 
-    if (id && e.target instanceof HTMLDivElement) {
+    if (id && target) {
       const card = document.getElementById(id);
 
       if (card) {
-        e.target.appendChild(card);
+        target.appendChild(card);
       }
     }
   }
@@ -46,51 +41,46 @@ export default function Home() {
       </div>
       <div className={classes.board}>
         <div className={classes.stack} onDragOver={dragOver} onDrop={dropCard}>
-          <div className={classes.card}></div>
+          <Card onDragStart={dragCardStart} />
         </div>
-        <div className={classes.stack}>
-          <div className={classes.card}></div>
-          <div className={classes.card}></div>
+        <div className={classes.stack} onDragOver={dragOver} onDrop={dropCard}>
+          <Card onDragStart={dragCardStart} />
+          <Card onDragStart={dragCardStart} />
         </div>
-        <div className={classes.stack}>
-          <div className={classes.card}></div>
-          <div className={classes.card}></div>
-          <div className={classes.card}></div>
+        <div className={classes.stack} onDragOver={dragOver} onDrop={dropCard}>
+          <Card onDragStart={dragCardStart} />
+          <Card onDragStart={dragCardStart} />
+          <Card onDragStart={dragCardStart} />
         </div>
-        <div className={classes.stack}>
-          <div className={classes.card}></div>
-          <div className={classes.card}></div>
-          <div className={classes.card}></div>
-          <div className={classes.card}></div>
+        <div className={classes.stack} onDragOver={dragOver} onDrop={dropCard}>
+          <Card onDragStart={dragCardStart} />
+          <Card onDragStart={dragCardStart} />
+          <Card onDragStart={dragCardStart} />
+          <Card onDragStart={dragCardStart} />
         </div>
-        <div className={classes.stack}>
-          <div className={classes.card}></div>
-          <div className={classes.card}></div>
-          <div className={classes.card}></div>
-          <div className={classes.card}></div>
-          <div className={classes.card}></div>
+        <div className={classes.stack} onDragOver={dragOver} onDrop={dropCard}>
+          <Card onDragStart={dragCardStart} />
+          <Card onDragStart={dragCardStart} />
+          <Card onDragStart={dragCardStart} />
+          <Card onDragStart={dragCardStart} />
+          <Card onDragStart={dragCardStart} />
         </div>
-        <div className={classes.stack}>
-          <div className={classes.card}></div>
-          <div className={classes.card}></div>
-          <div className={classes.card}></div>
-          <div className={classes.card}></div>
-          <div className={classes.card}></div>
-          <div className={classes.card}></div>
+        <div className={classes.stack} onDragOver={dragOver} onDrop={dropCard}>
+          <Card onDragStart={dragCardStart} />
+          <Card onDragStart={dragCardStart} />
+          <Card onDragStart={dragCardStart} />
+          <Card onDragStart={dragCardStart} />
+          <Card onDragStart={dragCardStart} />
+          <Card onDragStart={dragCardStart} />
         </div>
-        <div className={classes.stack}>
-          <div className={classes.card}></div>
-          <div className={classes.card}></div>
-          <div className={classes.card}></div>
-          <div className={classes.card}></div>
-          <div className={classes.card}></div>
-          <div className={classes.card}></div>
-          <div
-            id="drag-card"
-            className={classes.card}
-            draggable="true"
-            onDragStart={dragCardStart}
-          ></div>
+        <div className={classes.stack} onDragOver={dragOver} onDrop={dropCard}>
+          <Card onDragStart={dragCardStart} />
+          <Card onDragStart={dragCardStart} />
+          <Card onDragStart={dragCardStart} />
+          <Card onDragStart={dragCardStart} />
+          <Card onDragStart={dragCardStart} />
+          <Card onDragStart={dragCardStart} />
+          <Card onDragStart={dragCardStart} />
         </div>
       </div>
       <div className={classes.board}>

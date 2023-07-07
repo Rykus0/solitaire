@@ -1,0 +1,19 @@
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  width: 140px;
+
+  font-size: 3rem;
+
+  border: 1px solid black;
+  border-radius: 5px;
+
+  background: white;
+}
+
+.dragging {
+  box-shadow: 6px 6px 6px 0px rgba(0, 0, 0, 0.75);
+  scale: 1.2;
+}

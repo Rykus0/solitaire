@@ -25,6 +25,7 @@
   outline: 1px solid red;
 }
 
+.stack > * + *,
 .stack > .card + .card {
   margin-top: -180px;
 }
@@ -37,14 +38,4 @@
   border-radius: 5px;
 
   background: white;
-}
-
-@media (prefers-color-scheme: dark) {
-  .vercelLogo {
-    filter: invert(1);
-  }
-
-  .logo {
-    filter: invert(1) drop-shadow(0 0 0.3rem #ffffff70);
-  }
 }
