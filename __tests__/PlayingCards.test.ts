@@ -13,6 +13,34 @@ describe("Card", () => {
     expect(myCard.getValue()).toBe(CardValue.Ace);
     expect(myCard.getSuit()).toBe(CardSuit.Hearts);
   });
+
+  it("should display face cards and aces by the first letter", () => {
+    const ace = new Card(CardValue.Ace, CardSuit.Hearts);
+    const jack = new Card(CardValue.Jack, CardSuit.Hearts);
+    const queen = new Card(CardValue.Queen, CardSuit.Hearts);
+    const king = new Card(CardValue.King, CardSuit.Hearts);
+
+    expect(ace.getDisplayValue()).toBe("A");
+    expect(jack.getDisplayValue()).toBe("J");
+    expect(queen.getDisplayValue()).toBe("Q");
+    expect(king.getDisplayValue()).toBe("K");
+  });
+
+  it("should display number cards by number", () => {
+    const two = new Card(CardValue.Two, CardSuit.Hearts);
+    const ten = new Card(CardValue.Ten, CardSuit.Hearts);
+
+    expect(two.getDisplayValue()).toBe("2");
+    expect(ten.getDisplayValue()).toBe("10");
+  });
+
+  it("should return formal card names", () => {
+    const ace = new Card(CardValue.Ace, CardSuit.Hearts);
+    const ten = new Card(CardValue.Ten, CardSuit.Clubs);
+
+    expect(ace.getCardName()).toBe("Ace of Hearts");
+    expect(ten.getCardName()).toBe("Ten of Clubs");
+  });
 });
 
 describe("Deck", () => {
