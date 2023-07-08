@@ -17,6 +17,14 @@ export class Card {
     return this.suit;
   }
 
+  getColor(): CardColor {
+    if (this.suit === CardSuit.Hearts || this.suit === CardSuit.Diamonds) {
+      return "red";
+    }
+
+    return "black";
+  }
+
   getCardName(): string {
     return `${CardValue[this.value]} of ${CardSuit[this.suit]}`;
   }
@@ -52,6 +60,8 @@ export enum CardValue {
   Queen,
   King,
 }
+
+type CardColor = "black" | "red";
 
 export class Deck {
   private cards: Card[] = [];
