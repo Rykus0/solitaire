@@ -21,7 +21,7 @@ export default function Home() {
     const target = e.target as HTMLDivElement;
     e.dataTransfer.clearData();
     e.dataTransfer.setData("text/plain", target.id);
-    // TODO: also grag all cards below this one (following siblings)
+    // TODO: also drag all cards below this one (following siblings)
   }
 
   function dragOver(e: DragEvent<HTMLDivElement>) {
