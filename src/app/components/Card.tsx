@@ -22,6 +22,8 @@ export default function Card(props: CardProps) {
       className={classes[CardSuit[props.card.getSuit()].toLowerCase()]}
       draggable="true"
       onDragStart={props.onDragStart}
+      data-suit={props.card.getSuit()}
+      data-value={props.card.getValue()}
     >
       {props.card.getDisplayValue()}
     </div>

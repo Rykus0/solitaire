@@ -1,8 +1,9 @@
 "use client";
 
 import { type DragEvent, useEffect, useRef, useState } from "react";
-import { PlayingCard as PlayingCard, Deck } from "../utils/PlayingCards";
+import { CardSuit, CardValue, PlayingCard, Deck } from "../utils/PlayingCards";
 import Card from "./components/Card";
+import * as rules from "../utils/rules";
 
 import classes from "./page.module.css";
 
@@ -24,8 +25,16 @@ export default function Home() {
   }
 
   function dragOver(e: DragEvent<HTMLDivElement>) {
-    e.preventDefault();
-    // TODO: only allow alternating suit and descending value
+    const cardId = e.dataTransfer?.getData("text");
+    const cardEl = document.getElementById(cardId) as HTMLElement;
+    const card = getCardFromEl(cardEl);
+
+    const targetStack = e.currentTarget as HTMLDivElement;
+    const topCard = getCardFromEl(targetStack.lastChild as HTMLElement);
+
+    if (rules.canStack(card, topCard)) {
+      e.preventDefault();
+    }
   }
 
   function dropCard(e: DragEvent<HTMLDivElement>) {
@@ -93,4 +102,10 @@ export default function Home() {
       </div>
     </main>
   );
+}
+
+function getCardFromEl(el: HTMLElement) {
+  const cardValue = Number(el.getAttribute("data-value"));
+  const cardSuit = Number(el.getAttribute("data-suit"));
+  return new PlayingCard(cardValue, cardSuit);
 }
