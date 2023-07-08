@@ -6,7 +6,12 @@ type CardProps = {
   card: PlayingCard;
   dragging?: boolean;
   onDragStart?: (e: DragEvent<HTMLDivElement>) => void;
+  // TODO: face up or down
+  //   - aria label only if face up
+  //   - draggable only if face up
 };
+
+// TODO: scale proportinately to container based on width
 
 export default function Card(props: CardProps) {
   const id = useId();
