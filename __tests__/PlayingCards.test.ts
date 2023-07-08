@@ -41,6 +41,18 @@ describe("Card", () => {
     expect(ace.getCardName()).toBe("Ace of Hearts");
     expect(ten.getCardName()).toBe("Ten of Clubs");
   });
+
+  it("should return the color of the card", () => {
+    const spade = new Card(CardValue.Ace, CardSuit.Spades);
+    const club = new Card(CardValue.Ten, CardSuit.Clubs);
+    const heart = new Card(CardValue.Queen, CardSuit.Hearts);
+    const diamond = new Card(CardValue.King, CardSuit.Diamonds);
+
+    expect(spade.getColor()).toBe("black");
+    expect(club.getColor()).toBe("black");
+    expect(heart.getColor()).toBe("red");
+    expect(diamond.getColor()).toBe("red");
+  });
 });
 
 describe("Deck", () => {
