@@ -11,6 +11,57 @@
   border-radius: 5px;
 
   background: white;
+  color: black;
+
+  position: relative;
+}
+
+.diamonds,
+.hearts {
+  composes: card;
+  color: red;
+}
+
+.clubs,
+.spades {
+  composes: card;
+  color: black;
+}
+
+.card::before,
+.card::after {
+  position: absolute;
+  line-height: 1;
+}
+
+.card::before {
+  top: 0;
+  left: 0;
+}
+
+.card::after {
+  bottom: 0;
+  right: 0;
+}
+
+.diamonds::before,
+.diamonds::after {
+  content: "♦";
+}
+
+.hearts::before,
+.hearts::after {
+  content: "♥";
+}
+
+.clubs::before,
+.clubs::after {
+  content: "♣";
+}
+
+.spades::before,
+.spades::after {
+  content: "♠";
 }
 
 .dragging {

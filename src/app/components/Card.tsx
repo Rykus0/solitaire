@@ -1,9 +1,9 @@
 import { type DragEvent, useId } from "react";
+import { Card as PlayingCard, CardSuit } from "../../utils/PlayingCards";
 import classes from "./Card.module.css";
 
 type CardProps = {
-  value?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13;
-  suit?: "spades" | "hearts" | "clubs" | "diamonds";
+  card: PlayingCard;
   dragging?: boolean;
   onDragStart?: (e: DragEvent<HTMLDivElement>) => void;
 };
@@ -14,11 +14,11 @@ export default function Card(props: CardProps) {
   return (
     <div
       id={id}
-      className={classes.card}
+      className={classes[CardSuit[props.card.getSuit()].toLowerCase()]}
       draggable="true"
       onDragStart={props.onDragStart}
     >
-      {props.value}
+      {props.card.getDisplayValue()}
     </div>
   );
 }
