@@ -1,6 +1,6 @@
 import shuffle from "./shuffle";
 
-export class Card {
+export class PlayingCard {
   private value: CardValue = CardValue.Ace;
   private suit: CardSuit = CardSuit.Hearts;
 
@@ -64,7 +64,7 @@ export enum CardValue {
 type CardColor = "black" | "red";
 
 export class Deck {
-  private cards: Card[] = [];
+  private cards: PlayingCard[] = [];
 
   constructor() {
     Object.values(CardSuit)
@@ -73,7 +73,9 @@ export class Deck {
         Object.values(CardValue)
           .filter((v) => !isNaN(Number(v)))
           .forEach((value) => {
-            this.cards.push(new Card(value as CardValue, suit as CardSuit));
+            this.cards.push(
+              new PlayingCard(value as CardValue, suit as CardSuit)
+            );
           });
       });
   }

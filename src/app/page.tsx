@@ -1,7 +1,7 @@
 "use client";
 
 import { type DragEvent, useEffect, useRef, useState } from "react";
-import { Card as PlayingCard, Deck } from "../utils/PlayingCards";
+import { PlayingCard as PlayingCard, Deck } from "../utils/PlayingCards";
 import Card from "./components/Card";
 
 import classes from "./page.module.css";

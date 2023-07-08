@@ -1,4 +1,9 @@
-import { Card, CardSuit, CardValue, Deck } from "../src/utils/PlayingCards";
+import {
+  PlayingCard,
+  CardSuit,
+  CardValue,
+  Deck,
+} from "../src/utils/PlayingCards";
 
 describe("CardValue", () => {
   it("should start with Ace == 1", () => {
@@ -8,17 +13,17 @@ describe("CardValue", () => {
 
 describe("Card", () => {
   it("should have a suit and value", () => {
-    const myCard = new Card(CardValue.Ace, CardSuit.Hearts);
+    const myCard = new PlayingCard(CardValue.Ace, CardSuit.Hearts);
 
     expect(myCard.getValue()).toBe(CardValue.Ace);
     expect(myCard.getSuit()).toBe(CardSuit.Hearts);
   });
 
   it("should display face cards and aces by the first letter", () => {
-    const ace = new Card(CardValue.Ace, CardSuit.Hearts);
-    const jack = new Card(CardValue.Jack, CardSuit.Hearts);
-    const queen = new Card(CardValue.Queen, CardSuit.Hearts);
-    const king = new Card(CardValue.King, CardSuit.Hearts);
+    const ace = new PlayingCard(CardValue.Ace, CardSuit.Hearts);
+    const jack = new PlayingCard(CardValue.Jack, CardSuit.Hearts);
+    const queen = new PlayingCard(CardValue.Queen, CardSuit.Hearts);
+    const king = new PlayingCard(CardValue.King, CardSuit.Hearts);
 
     expect(ace.getDisplayValue()).toBe("A");
     expect(jack.getDisplayValue()).toBe("J");
@@ -27,26 +32,26 @@ describe("Card", () => {
   });
 
   it("should display number cards by number", () => {
-    const two = new Card(CardValue.Two, CardSuit.Hearts);
-    const ten = new Card(CardValue.Ten, CardSuit.Hearts);
+    const two = new PlayingCard(CardValue.Two, CardSuit.Hearts);
+    const ten = new PlayingCard(CardValue.Ten, CardSuit.Hearts);
 
     expect(two.getDisplayValue()).toBe("2");
     expect(ten.getDisplayValue()).toBe("10");
   });
 
   it("should return formal card names", () => {
-    const ace = new Card(CardValue.Ace, CardSuit.Hearts);
-    const ten = new Card(CardValue.Ten, CardSuit.Clubs);
+    const ace = new PlayingCard(CardValue.Ace, CardSuit.Hearts);
+    const ten = new PlayingCard(CardValue.Ten, CardSuit.Clubs);
 
     expect(ace.getCardName()).toBe("Ace of Hearts");
     expect(ten.getCardName()).toBe("Ten of Clubs");
   });
 
   it("should return the color of the card", () => {
-    const spade = new Card(CardValue.Ace, CardSuit.Spades);
-    const club = new Card(CardValue.Ten, CardSuit.Clubs);
-    const heart = new Card(CardValue.Queen, CardSuit.Hearts);
-    const diamond = new Card(CardValue.King, CardSuit.Diamonds);
+    const spade = new PlayingCard(CardValue.Ace, CardSuit.Spades);
+    const club = new PlayingCard(CardValue.Ten, CardSuit.Clubs);
+    const heart = new PlayingCard(CardValue.Queen, CardSuit.Hearts);
+    const diamond = new PlayingCard(CardValue.King, CardSuit.Diamonds);
 
     expect(spade.getColor()).toBe("black");
     expect(club.getColor()).toBe("black");
