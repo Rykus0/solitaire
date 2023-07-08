@@ -76,6 +76,8 @@ export class Deck {
     return this.cards.splice(0, count);
   }
 
+  draw = this.deal;
+
   count() {
     return this.cards.length;
   }
