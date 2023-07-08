@@ -16,6 +16,18 @@ export class Card {
   getSuit(): CardSuit {
     return this.suit;
   }
+
+  getCardName(): string {
+    return `${CardValue[this.value]} of ${CardSuit[this.suit]}`;
+  }
+
+  getDisplayValue(): string {
+    if (this.value > 10 || this.value === 1) {
+      return `${CardValue[this.value]}`.charAt(0);
+    }
+
+    return `${this.value}`;
+  }
 }
 
 export enum CardSuit {
