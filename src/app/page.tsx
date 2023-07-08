@@ -1,13 +1,28 @@
 "use client";
 
 import { type DragEvent, useEffect, useRef, useState } from "react";
-import { CardSuit, CardValue, PlayingCard, Deck } from "../utils/PlayingCards";
+import { PlayingCard, Deck } from "../utils/PlayingCards";
 import Card from "./components/Card";
 import * as rules from "../utils/rules";
 
 import classes from "./page.module.css";
 
 const STACK_COUNT = 7;
+
+// Features:
+// - undo
+// - new game
+// - timer?
+// - ace stacks
+// - deck stacks
+// - card interactions
+//   - point and click
+//   - keyboard
+// - visuals
+//   - active card
+//   - card backs
+//   - card lift state
+//   - drag cards
 
 export default function Home() {
   const deck = useRef<Deck>(new Deck());
@@ -20,8 +35,8 @@ export default function Home() {
   function dragCardStart(e: DragEvent<HTMLDivElement>) {
     const target = e.target as HTMLDivElement;
     e.dataTransfer.clearData();
+    // TODO: pass card data as JSON?
     e.dataTransfer.setData("text/plain", target.id);
-    // TODO: also drag all cards below this one (following siblings)
   }
 
   function dragOver(e: DragEvent<HTMLDivElement>) {
@@ -32,7 +47,7 @@ export default function Home() {
     const targetStack = e.currentTarget as HTMLDivElement;
     const topCard = getCardFromEl(targetStack.lastChild as HTMLElement);
 
-    if (rules.canStack(card, topCard)) {
+    if (card && rules.canStack(card, topCard)) {
       e.preventDefault();
     }
   }
@@ -40,17 +55,27 @@ export default function Home() {
   function dropCard(e: DragEvent<HTMLDivElement>) {
     e.preventDefault();
 
-    // TODO: BUG - after card moved, currentTarget == old parent
     // TODO: flip top card of old stack if face down
 
     const id = e.dataTransfer?.getData("text");
-    const target = e.currentTarget as HTMLDivElement;
+    const targetStack = e.currentTarget as HTMLDivElement;
+    const cardEl = document.getElementById(id) as HTMLElement;
 
-    if (id && target) {
-      const card = document.getElementById(id);
+    if (cardEl && targetStack) {
+      const parentStack = cardEl.parentElement;
+      const card = getCardFromEl(cardEl);
 
-      if (card) {
-        target.appendChild(card);
+      if (card && parentStack) {
+        const stackIndex = getStackIndexFromEl(targetStack);
+        const parentStackIndex = getStackIndexFromEl(parentStack);
+        const cardIndex = Array.from(parentStack.children).indexOf(cardEl);
+
+        const newStacks = stacks.map((stack) => stack.slice());
+        const movedCards = newStacks[parentStackIndex].splice(cardIndex);
+
+        newStacks[stackIndex] = newStacks[stackIndex].concat(movedCards);
+
+        setStacks((stacks) => newStacks);
       }
     }
   }
@@ -81,6 +106,7 @@ export default function Home() {
       <div className={classes.board}>
         {stacks.map((stack, index) => (
           <div
+            id={`stack-${index}`}
             key={`stack-${index}`}
             className={classes.stack}
             onDragOver={dragOver}
@@ -104,8 +130,14 @@ export default function Home() {
   );
 }
 
-function getCardFromEl(el: HTMLElement) {
+function getCardFromEl(el?: HTMLElement) {
+  if (!el) return undefined;
   const cardValue = Number(el.getAttribute("data-value"));
   const cardSuit = Number(el.getAttribute("data-suit"));
   return new PlayingCard(cardValue, cardSuit);
+}
+
+function getStackIndexFromEl(el?: HTMLElement) {
+  if (!el) return -1;
+  return Number(el.id.split("-")[1]);
 }
