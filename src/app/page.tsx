@@ -136,6 +136,6 @@ function getCardFromEl(el?: HTMLElement) {
 }
 
 function getStackIndexFromEl(el?: HTMLElement) {
-  if (!el) return -1;
-  return Number(el.id.split("-")[1]);
+  if (!el || !el.parentElement) return -1;
+  return Array.from(el.parentElement.children).indexOf(el);
 }
