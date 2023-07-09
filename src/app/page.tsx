@@ -3,6 +3,7 @@
 import { type DragEvent, useEffect, useRef, useState } from "react";
 import { PlayingCard, Deck } from "../utils/PlayingCards";
 import Card from "./components/Card";
+import Stack from "./components/Stack";
 import * as rules from "../utils/rules";
 
 import classes from "./page.module.css";
@@ -106,13 +107,7 @@ export default function Home() {
       </div>
       <div className={classes.board}>
         {stacks.map((stack, index) => (
-          <div
-            id={`stack-${index}`}
-            key={`stack-${index}`}
-            className={classes.stack}
-            onDragOver={dragOver}
-            onDrop={dropCard}
-          >
+          <Stack key={`stack-${index}`} onDragOver={dragOver} onDrop={dropCard}>
             {stack.map((card) => (
               <Card
                 key={card.getCardName()}
@@ -120,7 +115,7 @@ export default function Home() {
                 onDragStart={dragCardStart}
               />
             ))}
-          </div>
+          </Stack>
         ))}
       </div>
       <div className={classes.board}>
