@@ -82,6 +82,8 @@ export default function Home() {
     }
   }
 
+  function placeholder() {}
+
   useEffect(() => {
     deck.current = new Deck();
     deck.current.shuffle();
@@ -100,10 +102,10 @@ export default function Home() {
   return (
     <main className={classes.main}>
       <div className={classes.board}>
-        <div className={classes.stack}></div>
-        <div className={classes.stack}></div>
-        <div className={classes.stack}></div>
-        <div className={classes.stack}></div>
+        <Stack onDragOver={placeholder} onDrop={placeholder} />
+        <Stack onDragOver={placeholder} onDrop={placeholder} />
+        <Stack onDragOver={placeholder} onDrop={placeholder} />
+        <Stack onDragOver={placeholder} onDrop={placeholder} />
       </div>
       <div className={classes.board}>
         {stacks.map((stack, index) => (
@@ -119,8 +121,8 @@ export default function Home() {
         ))}
       </div>
       <div className={classes.board}>
-        <div className={classes.stack}></div>
-        <div className={classes.stack}></div>
+        <Stack onDragOver={placeholder} onDrop={placeholder} />
+        <Stack onDragOver={placeholder} onDrop={placeholder} />
       </div>
     </main>
   );
