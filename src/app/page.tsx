@@ -13,6 +13,7 @@ const STACK_COUNT = 7;
 // - undo
 // - new game
 // - timer?
+// - Move counter
 // - ace stacks
 // - deck stacks
 // - card interactions
