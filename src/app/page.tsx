@@ -123,6 +123,7 @@ export default function Home() {
             cards={stack}
             onDrop={dropCard}
             canStack={rules.canStack}
+            direction="column"
           />
         ))}
       </div>
@@ -132,6 +133,7 @@ export default function Home() {
           onDrop={placeholder}
           canStack={() => false}
           cards={drawnCards.slice(drawnCards.length - 3)}
+          direction="row"
         />
       </div>
     </main>

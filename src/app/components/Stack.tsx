@@ -9,10 +9,12 @@ type StackProps = {
   cards?: PlayingCard[];
   onDrop: (e: DragEvent<HTMLDivElement>) => void;
   canStack: (card: PlayingCard, topCard?: PlayingCard) => boolean;
+  direction: "row" | "column" | "none";
 };
 
 export default function Stack(props: PropsWithChildren<StackProps>) {
   const id = useId();
+  const { direction = "column" } = props;
 
   function dragOver(e: DragEvent<HTMLDivElement>) {
     const cardJSON = e.dataTransfer?.getData("text/json");
@@ -27,7 +29,7 @@ export default function Stack(props: PropsWithChildren<StackProps>) {
   return (
     <div
       id={id}
-      className={classes.stack}
+      className={classes[direction]}
       onDragOver={dragOver}
       onDrop={props.onDrop}
     >
