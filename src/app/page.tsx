@@ -28,14 +28,16 @@ const STACK_COUNT = 7;
 
 export default function Home() {
   const deck = useRef<Deck>(new Deck());
-  const [drawnCards, setDrawnCards] = useState<PlayingCard[]>([]);
-  const [stacks, setStacks] = useState<PlayingCard[][]>(new Array(STACK_COUNT));
+  const [wastepile, setWastepile] = useState<PlayingCard[]>([]);
+  const [tableau, setTableau] = useState<PlayingCard[][]>(
+    new Array(STACK_COUNT)
+  );
 
   // TODO: alternately use click to pick up and drop card(s)
   // TODO: use menu-style keyboard controls to navigate cards
   // TODO: use enter to pick up and drop focused card and following siblings
 
-  function dropCard(e: DragEvent<HTMLDivElement>) {
+  function dropCardInTableau(e: DragEvent<HTMLDivElement>) {
     e.preventDefault();
 
     const cardJSON = e.dataTransfer?.getData("text/json");
@@ -50,7 +52,7 @@ export default function Home() {
         const parentStackIndex = getStackIndexFromEl(parentStack);
         const cardIndex = Array.from(parentStack.children).indexOf(cardEl);
 
-        setStacks((prevStacks) => {
+        setTableau((prevStacks) => {
           const newStacks = prevStacks.map((stack) => stack.slice());
           const movedCards = newStacks[parentStackIndex].splice(cardIndex);
 
@@ -69,16 +71,16 @@ export default function Home() {
 
   function draw() {
     if (deck.current.count()) {
-      setDrawnCards((prevCards) => {
+      setWastepile((prevCards) => {
         const cards = deck.current.draw(3);
         cards[cards.length - 1].flip();
         return prevCards.concat(cards);
       });
     } else {
-      const cards = Array.from(drawnCards);
+      const cards = Array.from(wastepile);
       cards.forEach((card) => card.flip());
       deck.current = new Deck(cards);
-      setDrawnCards([]);
+      setWastepile([]);
     }
   }
 
@@ -95,7 +97,7 @@ export default function Home() {
       stacks[i][stackSize - 1].flip();
     }
 
-    setStacks(stacks);
+    setTableau(stacks);
   }, []);
 
   return (
@@ -129,11 +131,11 @@ export default function Home() {
         gridArea="suit4"
       />
 
-      {stacks.map((stack, index) => (
+      {tableau.map((stack, index) => (
         <Stack
           key={`stack-${index}`}
           cards={stack}
-          onDrop={dropCard}
+          onDrop={dropCardInTableau}
           canStack={rules.canStack}
           direction="column"
           gridArea={`col${index + 1}`}
@@ -146,7 +148,7 @@ export default function Home() {
       <Stack
         onDrop={placeholder}
         canStack={() => false}
-        cards={drawnCards.slice(drawnCards.length - 3)}
+        cards={wastepile.slice(wastepile.length - 3)}
         direction="row"
         gridArea="draw"
       />
