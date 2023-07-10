@@ -3,6 +3,7 @@ import shuffle from "./shuffle";
 export class PlayingCard {
   private value: CardValue = CardValue.Ace;
   private suit: CardSuit = CardSuit.Hearts;
+  private faceUp: boolean = false;
 
   constructor(value: CardValue, suit: CardSuit) {
     this.value = value;
@@ -15,6 +16,10 @@ export class PlayingCard {
 
   getSuit(): CardSuit {
     return this.suit;
+  }
+
+  getFaceUp(): boolean {
+    return this.faceUp;
   }
 
   getColor(): CardColor {
@@ -35,6 +40,10 @@ export class PlayingCard {
     }
 
     return `${this.value}`;
+  }
+
+  flip() {
+    this.faceUp = !this.faceUp;
   }
 }
 
