@@ -38,7 +38,7 @@ export class PlayingCard {
 
   static fromJSON(json: string): PlayingCard {
     const values = JSON.parse(json);
-    return new PlayingCard(values.value, values.suit, values.faceUp);
+    return new PlayingCard(values._value, values._suit, values._faceUp);
   }
 
   get value(): CardValue {

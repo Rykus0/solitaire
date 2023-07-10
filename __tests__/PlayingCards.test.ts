@@ -74,6 +74,14 @@ describe("Card", () => {
     card.flip();
     expect(card.faceUp).toBe(true);
   });
+
+  it("can be instantiated from JSON", () => {
+    const card = new PlayingCard(CardValue.Ace, CardSuit.Spades);
+    const json = JSON.stringify(card);
+    const fromJSON = PlayingCard.fromJSON(json);
+
+    expect(fromJSON.isEqualTo(card)).toBe(true);
+  });
 });
 
 describe("Deck", () => {
