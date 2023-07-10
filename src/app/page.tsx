@@ -115,7 +115,14 @@ export default function Home() {
 
   return (
     <main className={classes.main}>
-      <div className={classes.board}></div>
+      <div className={classes.board}>
+        <Stack
+          onDrop={placeholder}
+          canStack={rules.canStackOnAce}
+          cards={[]}
+          direction="none"
+        />
+      </div>
       <div className={classes.board}>
         {stacks.map((stack, index) => (
           <Stack
