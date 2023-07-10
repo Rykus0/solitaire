@@ -58,8 +58,6 @@ export default function Home() {
   function dropCard(e: DragEvent<HTMLDivElement>) {
     e.preventDefault();
 
-    // TODO: flip top card of old stack if face down
-
     const id = e.dataTransfer?.getData("text");
     const targetStack = e.currentTarget as HTMLDivElement;
     const cardEl = document.getElementById(id) as HTMLElement;
@@ -96,8 +94,6 @@ export default function Home() {
     deck.current = new Deck();
     deck.current.shuffle();
     const stacks = new Array(STACK_COUNT);
-
-    // TODO: start all face down except top card
 
     for (let i = 0; i < STACK_COUNT; i++) {
       const stackSize = i + 1;
