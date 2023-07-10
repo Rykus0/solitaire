@@ -5,9 +5,15 @@ export class PlayingCard {
   private suit: CardSuit = CardSuit.Hearts;
   private faceUp: boolean = false;
 
-  constructor(value: CardValue, suit: CardSuit) {
+  constructor(value: CardValue, suit: CardSuit, faceUp: boolean = false) {
     this.value = value;
     this.suit = suit;
+    this.faceUp = faceUp;
+  }
+
+  static fromJSON(json: string): PlayingCard {
+    const values = JSON.parse(json);
+    return new PlayingCard(values.value, values.suit, values.faceUp);
   }
 
   getValue(): CardValue {
