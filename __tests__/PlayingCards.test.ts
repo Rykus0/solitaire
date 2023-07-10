@@ -58,6 +58,13 @@ describe("Card", () => {
     expect(heart.getColor()).toBe("red");
     expect(diamond.getColor()).toBe("red");
   });
+
+  it("can be flipped face up or face down", () => {
+    const card = new PlayingCard(CardValue.Ace, CardSuit.Spades);
+    expect(card.getFaceUp()).toBe(false);
+    card.flip();
+    expect(card.getFaceUp()).toBe(true);
+  });
 });
 
 describe("Deck", () => {
