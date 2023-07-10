@@ -75,18 +75,22 @@ type CardColor = "black" | "red";
 export class Deck {
   private cards: PlayingCard[] = [];
 
-  constructor() {
-    Object.values(CardSuit)
-      .filter((v) => !isNaN(Number(v)))
-      .forEach((suit) => {
-        Object.values(CardValue)
-          .filter((v) => !isNaN(Number(v)))
-          .forEach((value) => {
-            this.cards.push(
-              new PlayingCard(value as CardValue, suit as CardSuit)
-            );
-          });
-      });
+  constructor(cards: PlayingCard[] = []) {
+    if (cards.length) {
+      this.cards = cards;
+    } else {
+      Object.values(CardSuit)
+        .filter((v) => !isNaN(Number(v)))
+        .forEach((suit) => {
+          Object.values(CardValue)
+            .filter((v) => !isNaN(Number(v)))
+            .forEach((value) => {
+              this.cards.push(
+                new PlayingCard(value as CardValue, suit as CardSuit)
+              );
+            });
+        });
+    }
   }
 
   shuffle() {
