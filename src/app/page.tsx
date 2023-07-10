@@ -45,6 +45,56 @@ export default function Home() {
   // TODO: use menu-style keyboard controls to navigate cards
   // TODO: use enter to pick up and drop focused card and following siblings
 
+  // search tableau, foundation, and wastepile
+  function removeCardsFromState(card: PlayingCard): PlayingCard[] {
+    // If coming from wastepile, it would be the last card
+    const pileCard = wastepile.slice(-1)[0];
+    if (pileCard && card.isEqualTo(pileCard)) {
+      const nextCard = wastepile.slice(-2)[0];
+      if (nextCard) {
+        nextCard.flip();
+      }
+
+      setWastepile((prevCards) => prevCards.slice(0, -1));
+      return [pileCard];
+    }
+
+    // If coming from foundation, it would be the last card
+    const foundationCard = foundation[card.getSuit()].slice(-1)[0];
+    if (foundationCard && card.isEqualTo(foundationCard)) {
+      setFoundation((prevFoundation) => ({
+        ...prevFoundation,
+        [card.getSuit()]: prevFoundation[card.getSuit()].slice(0, -1),
+      }));
+      return [foundationCard];
+    }
+
+    // If coming from tableau, need to search each
+    // - can skip empty
+    // - only need to check face up
+    for (let i = 0; i < tableau.length; i++) {
+      for (let j = 0; j < tableau[i].length; j++) {
+        if (card.isFaceUp() && card.isEqualTo(tableau[i][j])) {
+          setTableau((prevStacks) => {
+            const newStacks = prevStacks.map((stack) => stack.slice());
+            newStacks[i] = newStacks[i].slice(0, j);
+
+            return newStacks;
+          });
+
+          const nextCard = tableau[i][j - 1];
+          if (nextCard) {
+            nextCard.flip();
+          }
+
+          return tableau[i].slice(j);
+        }
+      }
+    }
+
+    return [];
+  }
+
   function dropCardInTableau(e: DragEvent<HTMLDivElement>) {
     e.preventDefault();
 
