@@ -1,7 +1,7 @@
 .stack {
   display: flex;
 
-  min-height: 200px;
+  min-width: 32px;
   width: 100%;
 
   position: relative;
