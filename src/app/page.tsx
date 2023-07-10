@@ -15,13 +15,11 @@ const STACK_COUNT = 7;
 // - timer?
 // - Move counter
 // - ace stacks
-// - deck stacks
 // - card interactions
 //   - point and click
 //   - keyboard
 // - visuals
 //   - active card
-//   - card backs
 //   - card lift state
 //   - drag cards
 //   - placeholder card to show drop target
@@ -45,17 +43,18 @@ export default function Home() {
   // TODO: use menu-style keyboard controls to navigate cards
   // TODO: use enter to pick up and drop focused card and following siblings
 
-  // search tableau, foundation, and wastepile
   function removeCardsFromState(card: PlayingCard): PlayingCard[] {
     // If coming from wastepile, it would be the last card
     const pileCard = wastepile.slice(-1)[0];
     if (pileCard && card.isEqualTo(pileCard)) {
-      const nextCard = wastepile.slice(-2)[0];
-      if (nextCard) {
-        nextCard.flip();
-      }
+      setWastepile((prevCards) => {
+        const newCards = prevCards.slice(0, -1);
 
-      setWastepile((prevCards) => prevCards.slice(0, -1));
+        newCards.forEach((card) => card.flip("down"));
+        newCards[newCards.length - 1].flip("up");
+
+        return newCards;
+      });
       return [pileCard];
     }
 
@@ -84,7 +83,7 @@ export default function Home() {
 
           const nextCard = tableau[i][j - 1];
           if (nextCard) {
-            nextCard.flip();
+            nextCard.flip("up");
           }
 
           return tableau[i].slice(j);
@@ -105,7 +104,6 @@ export default function Home() {
     if (card && targetStack) {
       const targetStackIndex = getStackIndexFromEl(targetStack);
       const movingCards = removeCardsFromState(card);
-      console.log(targetStack, targetStackIndex);
 
       if (movingCards.length) {
         setTableau((prevStacks) => {
@@ -122,13 +120,14 @@ export default function Home() {
   function draw() {
     if (deck.current.count()) {
       setWastepile((prevCards) => {
-        const cards = deck.current.draw(3);
-        cards[cards.length - 1].flip();
-        return prevCards.concat(cards);
+        const cards = Array.from(wastepile).concat(deck.current.draw(3));
+        cards.forEach((card) => card.flip("down"));
+        cards[cards.length - 1].flip("up");
+        return cards;
       });
     } else {
       const cards = Array.from(wastepile);
-      cards.forEach((card) => card.flip());
+      cards.forEach((card) => card.flip("down"));
       deck.current = new Deck(cards);
       setWastepile([]);
     }
@@ -144,7 +143,7 @@ export default function Home() {
     for (let i = 0; i < STACK_COUNT; i++) {
       const stackSize = i + 1;
       stacks[i] = deck.current.draw(stackSize);
-      stacks[i][stackSize - 1].flip();
+      stacks[i][stackSize - 1].flip("up");
     }
 
     setTableau(stacks);
@@ -198,7 +197,7 @@ export default function Home() {
       <Stack
         onDrop={placeholder}
         canStack={() => false}
-        cards={wastepile.slice(wastepile.length - 3)}
+        cards={wastepile.slice(-3)}
         direction="row"
         gridArea="draw"
       />
