@@ -1,7 +1,7 @@
 "use client";
 
 import { type DragEvent, useEffect, useRef, useState } from "react";
-import { PlayingCard, Deck } from "../utils/PlayingCards";
+import { PlayingCard, Deck, CardSuit } from "../utils/PlayingCards";
 import Stack from "./components/Stack";
 import * as rules from "../utils/rules";
 
@@ -31,6 +31,14 @@ export default function Home() {
   const [wastepile, setWastepile] = useState<PlayingCard[]>([]);
   const [tableau, setTableau] = useState<PlayingCard[][]>(
     new Array(STACK_COUNT)
+  );
+  const [foundation, setFoundation] = useState<Record<CardSuit, PlayingCard[]>>(
+    {
+      [CardSuit.Hearts]: [],
+      [CardSuit.Clubs]: [],
+      [CardSuit.Diamonds]: [],
+      [CardSuit.Spades]: [],
+    }
   );
 
   // TODO: alternately use click to pick up and drop card(s)
