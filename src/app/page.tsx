@@ -71,7 +71,7 @@ export default function Home() {
     if (deck.current.count()) {
       setDrawnCards((prevCards) => {
         const cards = deck.current.draw(3);
-        cards.forEach((card) => card.flip());
+        cards[cards.length - 1].flip();
         return prevCards.concat(cards);
       });
     } else {
