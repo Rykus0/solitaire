@@ -96,6 +96,7 @@ export default function Home() {
     for (let i = 0; i < STACK_COUNT; i++) {
       const stackSize = i + 1;
       stacks[i] = deck.current.draw(stackSize);
+      stacks[i][stackSize - 1].flip();
     }
 
     setStacks(stacks);
