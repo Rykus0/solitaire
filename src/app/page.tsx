@@ -51,7 +51,7 @@ export default function Home() {
         const newCards = prevCards.slice(0, -1);
 
         newCards.forEach((card) => card.flip("down"));
-        newCards[newCards.length - 1].flip("up");
+        newCards[newCards.length - 1]?.flip("up");
 
         return newCards;
       });
@@ -117,6 +117,24 @@ export default function Home() {
     }
   }
 
+  function dropCardInFoundation(e: DragEvent<HTMLDivElement>) {
+    e.preventDefault();
+
+    const cardJSON = e.dataTransfer?.getData("text/json");
+    const card = PlayingCard.fromJSON(cardJSON);
+
+    if (card) {
+      setFoundation((prevFoundation) => {
+        return {
+          ...prevFoundation,
+          [card.suit]: prevFoundation[card.suit].concat(
+            removeCardsFromState(card)
+          ),
+        };
+      });
+    }
+  }
+
   function draw() {
     if (deck.current.count()) {
       setWastepile((prevCards) => {
@@ -152,30 +170,30 @@ export default function Home() {
   return (
     <main className={classes.main}>
       <Stack
-        onDrop={placeholder}
+        onDrop={dropCardInFoundation}
         canStack={rules.canStackOnAce}
-        cards={[]}
+        cards={foundation[CardSuit.Hearts]}
         direction="none"
         gridArea="suit1"
       />
       <Stack
-        onDrop={placeholder}
+        onDrop={dropCardInFoundation}
         canStack={rules.canStackOnAce}
-        cards={[]}
+        cards={foundation[CardSuit.Clubs]}
         direction="none"
         gridArea="suit2"
       />
       <Stack
-        onDrop={placeholder}
+        onDrop={dropCardInFoundation}
         canStack={rules.canStackOnAce}
-        cards={[]}
+        cards={foundation[CardSuit.Diamonds]}
         direction="none"
         gridArea="suit3"
       />
       <Stack
-        onDrop={placeholder}
+        onDrop={dropCardInFoundation}
         canStack={rules.canStackOnAce}
-        cards={[]}
+        cards={foundation[CardSuit.Spades]}
         direction="none"
         gridArea="suit4"
       />

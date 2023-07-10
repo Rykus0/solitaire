@@ -6,7 +6,7 @@
   min-height: max(44px, 17.5vw);
 
   position: relative;
-  /* outline: 1px solid red; */
+  outline: 1px solid red;
   overflow: hidden;
 }
 
