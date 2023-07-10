@@ -16,14 +16,17 @@ export default function Card(props: CardProps) {
     ? classes[CardSuit[suit].toLowerCase()]
     : classes.back;
 
+  function dragStart(e: DragEvent<HTMLDivElement>) {
+    e.dataTransfer.clearData();
+    e.dataTransfer.setData("text/json", JSON.stringify(props.card));
+  }
+
   return (
     <div
       id={id}
       className={className}
       draggable={faceUp ? "true" : "false"}
-      onDragStart={faceUp ? props.onDragStart : undefined}
-      data-suit={suit}
-      data-value={props.card.getValue()}
+      onDragStart={faceUp ? dragStart : undefined}
       aria-label={faceUp ? props.card.getCardName() : "Face down card"}
     >
       {faceUp && props.card.getDisplayValue()}
