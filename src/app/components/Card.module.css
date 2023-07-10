@@ -15,9 +15,8 @@
   font-size: clamp(0.75rem, 4vw, 3rem);
 
   border: 5px solid white;
+  outline: 1px solid black;
   border-radius: 5px;
-  box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.15);
-  box-shadow: 0 0 0.5em rgb(0 0 0 / 0.15);
 
   background: white;
   color: black;
