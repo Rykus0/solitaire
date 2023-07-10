@@ -26,14 +26,14 @@ export enum CardValue {
 type CardColor = "black" | "red";
 
 export class PlayingCard {
-  private value: CardValue = CardValue.Ace;
-  private suit: CardSuit = CardSuit.Hearts;
-  private faceUp: boolean = false;
+  private _value: CardValue = CardValue.Ace;
+  private _suit: CardSuit = CardSuit.Hearts;
+  private _faceUp: boolean = false;
 
   constructor(value: CardValue, suit: CardSuit, faceUp: boolean = false) {
-    this.value = value;
-    this.suit = suit;
-    this.faceUp = faceUp;
+    this._value = value;
+    this._suit = suit;
+    this._faceUp = faceUp;
   }
 
   static fromJSON(json: string): PlayingCard {
@@ -41,48 +41,48 @@ export class PlayingCard {
     return new PlayingCard(values.value, values.suit, values.faceUp);
   }
 
-  getValue(): CardValue {
-    return this.value;
+  get value(): CardValue {
+    return this._value;
   }
 
-  getSuit(): CardSuit {
-    return this.suit;
+  get suit(): CardSuit {
+    return this._suit;
   }
 
-  getFaceUp(): boolean {
-    return this.faceUp;
+  get faceUp(): boolean {
+    return this._faceUp;
   }
 
-  getColor(): CardColor {
-    if (this.suit === CardSuit.Hearts || this.suit === CardSuit.Diamonds) {
+  get color(): CardColor {
+    if (this._suit === CardSuit.Hearts || this._suit === CardSuit.Diamonds) {
       return "red";
     }
 
     return "black";
   }
 
-  getCardName(): string {
-    return `${CardValue[this.value]} of ${CardSuit[this.suit]}`;
+  get name(): string {
+    return `${CardValue[this._value]} of ${CardSuit[this._suit]}`;
   }
 
-  getDisplayValue(): string {
-    if (this.value > 10 || this.value === 1) {
-      return `${CardValue[this.value]}`.charAt(0);
+  get displayValue(): string {
+    if (this._value > 10 || this._value === 1) {
+      return `${CardValue[this._value]}`.charAt(0);
     }
 
-    return `${this.value}`;
+    return `${this._value}`;
   }
 
   isEqualTo(card: PlayingCard): boolean {
-    return this.value === card.getValue() && this.suit === card.getSuit();
+    return this._value === card.value && this._suit === card.suit;
   }
 
   isFaceUp(): boolean {
-    return this.faceUp;
+    return this._faceUp;
   }
 
   flip() {
-    this.faceUp = !this.faceUp;
+    this._faceUp = !this._faceUp;
   }
 }
 

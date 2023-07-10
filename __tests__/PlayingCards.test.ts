@@ -15,8 +15,8 @@ describe("Card", () => {
   it("should have a suit and value", () => {
     const myCard = new PlayingCard(CardValue.Ace, CardSuit.Hearts);
 
-    expect(myCard.getValue()).toBe(CardValue.Ace);
-    expect(myCard.getSuit()).toBe(CardSuit.Hearts);
+    expect(myCard.value).toBe(CardValue.Ace);
+    expect(myCard.suit).toBe(CardSuit.Hearts);
   });
 
   it("can be compared to other cards", () => {
@@ -34,26 +34,26 @@ describe("Card", () => {
     const queen = new PlayingCard(CardValue.Queen, CardSuit.Hearts);
     const king = new PlayingCard(CardValue.King, CardSuit.Hearts);
 
-    expect(ace.getDisplayValue()).toBe("A");
-    expect(jack.getDisplayValue()).toBe("J");
-    expect(queen.getDisplayValue()).toBe("Q");
-    expect(king.getDisplayValue()).toBe("K");
+    expect(ace.displayValue).toBe("A");
+    expect(jack.displayValue).toBe("J");
+    expect(queen.displayValue).toBe("Q");
+    expect(king.displayValue).toBe("K");
   });
 
   it("should display number cards by number", () => {
     const two = new PlayingCard(CardValue.Two, CardSuit.Hearts);
     const ten = new PlayingCard(CardValue.Ten, CardSuit.Hearts);
 
-    expect(two.getDisplayValue()).toBe("2");
-    expect(ten.getDisplayValue()).toBe("10");
+    expect(two.displayValue).toBe("2");
+    expect(ten.displayValue).toBe("10");
   });
 
   it("should return formal card names", () => {
     const ace = new PlayingCard(CardValue.Ace, CardSuit.Hearts);
     const ten = new PlayingCard(CardValue.Ten, CardSuit.Clubs);
 
-    expect(ace.getCardName()).toBe("Ace of Hearts");
-    expect(ten.getCardName()).toBe("Ten of Clubs");
+    expect(ace.name).toBe("Ace of Hearts");
+    expect(ten.name).toBe("Ten of Clubs");
   });
 
   it("should return the color of the card", () => {
@@ -62,17 +62,17 @@ describe("Card", () => {
     const heart = new PlayingCard(CardValue.Queen, CardSuit.Hearts);
     const diamond = new PlayingCard(CardValue.King, CardSuit.Diamonds);
 
-    expect(spade.getColor()).toBe("black");
-    expect(club.getColor()).toBe("black");
-    expect(heart.getColor()).toBe("red");
-    expect(diamond.getColor()).toBe("red");
+    expect(spade.color).toBe("black");
+    expect(club.color).toBe("black");
+    expect(heart.color).toBe("red");
+    expect(diamond.color).toBe("red");
   });
 
   it("can be flipped face up or face down", () => {
     const card = new PlayingCard(CardValue.Ace, CardSuit.Spades);
-    expect(card.getFaceUp()).toBe(false);
+    expect(card.faceUp).toBe(false);
     card.flip();
-    expect(card.getFaceUp()).toBe(true);
+    expect(card.faceUp).toBe(true);
   });
 });
 
@@ -109,8 +109,8 @@ describe("Deck", () => {
     const myDeck = new Deck();
     const myCard = myDeck.deal()[0];
 
-    expect(myCard.getSuit()).toBe(CardSuit.Hearts);
-    expect(myCard.getValue()).toBe(CardValue.Ace);
+    expect(myCard.suit).toBe(CardSuit.Hearts);
+    expect(myCard.value).toBe(CardValue.Ace);
   });
 
   it("should remove the card from the deck once dealt", () => {
