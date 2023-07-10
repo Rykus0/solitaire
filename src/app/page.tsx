@@ -35,18 +35,6 @@ export default function Home() {
   // TODO: use menu-style keyboard controls to navigate cards
   // TODO: use enter to pick up and drop focused card and following siblings
 
-  function dragOver(e: DragEvent<HTMLDivElement>) {
-    const cardData = e.dataTransfer?.getData("text");
-    const card = JSON.parse(cardData) as PlayingCard;
-
-    const targetStack = e.currentTarget as HTMLDivElement;
-    const topCard = getCardFromEl(targetStack.lastChild as HTMLElement);
-
-    if (card && rules.canStack(card, topCard)) {
-      e.preventDefault();
-    }
-  }
-
   function dropCard(e: DragEvent<HTMLDivElement>) {
     e.preventDefault();
 
