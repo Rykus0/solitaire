@@ -141,6 +141,7 @@ export default function Home() {
         direction="none"
         gridArea="suit4"
       />
+
       {stacks.map((stack, index) => (
         <Stack
           key={`stack-${index}`}
@@ -151,6 +152,7 @@ export default function Home() {
           gridArea={`col${index + 1}`}
         />
       ))}
+
       <button onClick={draw} style={{ gridArea: "deck" }}>
         draw
       </button>
