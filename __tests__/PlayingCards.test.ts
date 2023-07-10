@@ -68,11 +68,31 @@ describe("Card", () => {
     expect(diamond.color).toBe("red");
   });
 
-  it("can be flipped face up or face down", () => {
+  it("can be flipped face up", () => {
+    const card = new PlayingCard(CardValue.Ace, CardSuit.Spades);
+    expect(card.faceUp).toBe(false);
+    card.flip("up");
+    expect(card.faceUp).toBe(true);
+    card.flip("up");
+    expect(card.faceUp).toBe(true);
+  });
+
+  it("can be flipped face down", () => {
+    const card = new PlayingCard(CardValue.Ace, CardSuit.Spades, true);
+    expect(card.faceUp).toBe(true);
+    card.flip("down");
+    expect(card.faceUp).toBe(false);
+    card.flip("down");
+    expect(card.faceUp).toBe(false);
+  });
+
+  it("can be flipped to the opposite face", () => {
     const card = new PlayingCard(CardValue.Ace, CardSuit.Spades);
     expect(card.faceUp).toBe(false);
     card.flip();
     expect(card.faceUp).toBe(true);
+    card.flip();
+    expect(card.faceUp).toBe(false);
   });
 
   it("can be instantiated from JSON", () => {
