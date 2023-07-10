@@ -154,13 +154,6 @@ export default function Home() {
   );
 }
 
-function getCardFromEl(el?: HTMLElement) {
-  if (!el) return undefined;
-  const cardValue = Number(el.getAttribute("data-value"));
-  const cardSuit = Number(el.getAttribute("data-suit"));
-  return new PlayingCard(cardValue, cardSuit);
-}
-
 function getStackIndexFromEl(el?: HTMLElement) {
   if (!el || !el.parentElement) return -1;
   return Array.from(el.parentElement.children).indexOf(el);
