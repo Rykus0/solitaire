@@ -73,6 +73,17 @@ describe("Deck", () => {
     expect(myDeck.count()).toBe(52);
   });
 
+  it("can be initialized from an array of cards", () => {
+    const cards = [
+      new PlayingCard(CardValue.Ace, CardSuit.Hearts),
+      new PlayingCard(CardValue.Ace, CardSuit.Clubs),
+      new PlayingCard(CardValue.Ace, CardSuit.Diamonds),
+      new PlayingCard(CardValue.Ace, CardSuit.Spades),
+    ];
+    const myDeck = new Deck(cards);
+    expect(myDeck.count()).toBe(4);
+  });
+
   it("should contain a full set of unique playing cards", () => {
     const myDeck = new Deck();
     const cardSet = new Set();
