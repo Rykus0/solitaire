@@ -2,7 +2,6 @@
 
 import { type DragEvent, useEffect, useRef, useState } from "react";
 import { PlayingCard, Deck } from "../utils/PlayingCards";
-import Card from "./components/Card";
 import Stack from "./components/Stack";
 import * as rules from "../utils/rules";
 
