@@ -26,8 +26,6 @@ const STACK_COUNT = 7;
 //   - drag cards
 //   - placeholder card to show drop target
 
-// TODO: use grid for layout
-
 export default function Home() {
   const deck = useRef<Deck>(new Deck());
   const [drawnCards, setDrawnCards] = useState<PlayingCard[]>([]);
@@ -115,34 +113,54 @@ export default function Home() {
 
   return (
     <main className={classes.main}>
-      <div className={classes.board}>
+      <Stack
+        onDrop={placeholder}
+        canStack={rules.canStackOnAce}
+        cards={[]}
+        direction="none"
+        gridArea="suit1"
+      />
+      <Stack
+        onDrop={placeholder}
+        canStack={rules.canStackOnAce}
+        cards={[]}
+        direction="none"
+        gridArea="suit2"
+      />
+      <Stack
+        onDrop={placeholder}
+        canStack={rules.canStackOnAce}
+        cards={[]}
+        direction="none"
+        gridArea="suit3"
+      />
+      <Stack
+        onDrop={placeholder}
+        canStack={rules.canStackOnAce}
+        cards={[]}
+        direction="none"
+        gridArea="suit4"
+      />
+      {stacks.map((stack, index) => (
         <Stack
-          onDrop={placeholder}
-          canStack={rules.canStackOnAce}
-          cards={[]}
-          direction="none"
+          key={`stack-${index}`}
+          cards={stack}
+          onDrop={dropCard}
+          canStack={rules.canStack}
+          direction="column"
+          gridArea={`col${index + 1}`}
         />
-      </div>
-      <div className={classes.board}>
-        {stacks.map((stack, index) => (
-          <Stack
-            key={`stack-${index}`}
-            cards={stack}
-            onDrop={dropCard}
-            canStack={rules.canStack}
-            direction="column"
-          />
-        ))}
-      </div>
-      <div className={classes.board} style={{ width: "25%" }}>
-        <button onClick={draw}>draw</button>
-        <Stack
-          onDrop={placeholder}
-          canStack={() => false}
-          cards={drawnCards.slice(drawnCards.length - 3)}
-          direction="row"
-        />
-      </div>
+      ))}
+      <button onClick={draw} style={{ gridArea: "deck" }}>
+        draw
+      </button>
+      <Stack
+        onDrop={placeholder}
+        canStack={() => false}
+        cards={drawnCards.slice(drawnCards.length - 3)}
+        direction="none"
+        gridArea="draw"
+      />
     </main>
   );
 }

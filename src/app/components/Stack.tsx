@@ -10,6 +10,7 @@ type StackProps = {
   onDrop: (e: DragEvent<HTMLDivElement>) => void;
   canStack: (card: PlayingCard, topCard?: PlayingCard) => boolean;
   direction: "row" | "column" | "none";
+  gridArea?: string;
 };
 
 export default function Stack(props: PropsWithChildren<StackProps>) {
@@ -32,6 +33,7 @@ export default function Stack(props: PropsWithChildren<StackProps>) {
       className={classes[direction]}
       onDragOver={dragOver}
       onDrop={props.onDrop}
+      style={{ gridArea: props.gridArea }}
     >
       {props.cards?.map((card) => (
         <Card key={card.getCardName()} card={card} />
