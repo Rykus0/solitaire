@@ -38,13 +38,12 @@ export default function Home() {
   function dropCard(e: DragEvent<HTMLDivElement>) {
     e.preventDefault();
 
-    const id = e.dataTransfer?.getData("text");
+    const cardJSON = e.dataTransfer?.getData("text/json");
+    const card = PlayingCard.fromJSON(cardJSON);
     const targetStack = e.currentTarget as HTMLDivElement;
-    const cardEl = document.getElementById(id) as HTMLElement;
 
-    if (cardEl && targetStack) {
+    if (card && targetStack) {
       const parentStack = cardEl.parentElement;
-      const card = getCardFromEl(cardEl);
 
       if (card && parentStack) {
         const stackIndex = getStackIndexFromEl(targetStack);
