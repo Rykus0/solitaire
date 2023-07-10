@@ -77,6 +77,10 @@ export class PlayingCard {
     return this.value === card.getValue() && this.suit === card.getSuit();
   }
 
+  isFaceUp(): boolean {
+    return this.faceUp;
+  }
+
   flip() {
     this.faceUp = !this.faceUp;
   }
