@@ -25,6 +25,7 @@ const STACK_COUNT = 7;
 //   - card backs
 //   - card lift state
 //   - drag cards
+//   - placeholder card to show drop target
 
 export default function Home() {
   const deck = useRef<Deck>(new Deck());
@@ -72,12 +73,13 @@ export default function Home() {
         const parentStackIndex = getStackIndexFromEl(parentStack);
         const cardIndex = Array.from(parentStack.children).indexOf(cardEl);
 
-        const newStacks = stacks.map((stack) => stack.slice());
-        const movedCards = newStacks[parentStackIndex].splice(cardIndex);
+        setStacks((prevStacks) => {
+          const newStacks = prevStacks.map((stack) => stack.slice());
+          const movedCards = newStacks[parentStackIndex].splice(cardIndex);
 
-        newStacks[stackIndex] = newStacks[stackIndex].concat(movedCards);
-
-        setStacks((stacks) => newStacks);
+          newStacks[stackIndex] = newStacks[stackIndex].concat(movedCards);
+          return newStacks;
+        });
       }
     }
   }
