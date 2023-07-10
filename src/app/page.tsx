@@ -103,24 +103,16 @@ export default function Home() {
     const targetStack = e.currentTarget as HTMLDivElement;
 
     if (card && targetStack) {
-      const parentStack = cardEl.parentElement;
+      const targetStackIndex = getStackIndexFromEl(targetStack);
+      const movingCards = removeCardsFromState(card);
+      console.log(targetStack, targetStackIndex);
 
-      if (card && parentStack) {
-        const stackIndex = getStackIndexFromEl(targetStack);
-        const parentStackIndex = getStackIndexFromEl(parentStack);
-        const cardIndex = Array.from(parentStack.children).indexOf(cardEl);
-
+      if (movingCards.length) {
         setTableau((prevStacks) => {
           const newStacks = prevStacks.map((stack) => stack.slice());
-          const movedCards = newStacks[parentStackIndex].splice(cardIndex);
 
-          if (newStacks[parentStackIndex].length) {
-            newStacks[parentStackIndex][
-              newStacks[parentStackIndex].length - 1
-            ].flip();
-          }
-
-          newStacks[stackIndex] = newStacks[stackIndex].concat(movedCards);
+          newStacks[targetStackIndex] =
+            newStacks[targetStackIndex].concat(movingCards);
           return newStacks;
         });
       }
@@ -215,6 +207,6 @@ export default function Home() {
 }
 
 function getStackIndexFromEl(el?: HTMLElement) {
-  if (!el || !el.parentElement) return -1;
-  return Array.from(el.parentElement.children).indexOf(el);
+  if (!el) return -1;
+  return Number(el.style.gridArea.replace("col", "")) - 1;
 }
