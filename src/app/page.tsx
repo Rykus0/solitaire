@@ -147,7 +147,7 @@ export default function Home() {
         onDrop={placeholder}
         canStack={() => false}
         cards={drawnCards.slice(drawnCards.length - 3)}
-        direction="none"
+        direction="row"
         gridArea="draw"
       />
     </main>
