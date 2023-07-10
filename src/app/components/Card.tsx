@@ -6,8 +6,6 @@ type CardProps = {
   card: PlayingCard;
   dragging?: boolean;
   onDragStart?: (e: DragEvent<HTMLDivElement>) => void;
-  // TODO: face up or down
-  //   - aria label only if face up
 };
 
 export default function Card(props: CardProps) {
@@ -26,6 +24,7 @@ export default function Card(props: CardProps) {
       onDragStart={faceUp ? props.onDragStart : undefined}
       data-suit={suit}
       data-value={props.card.getValue()}
+      aria-label={faceUp ? props.card.getCardName() : "Face down card"}
     >
       {faceUp && props.card.getDisplayValue()}
     </div>
