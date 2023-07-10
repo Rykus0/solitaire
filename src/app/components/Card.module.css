@@ -6,7 +6,10 @@
 
   width: 100px;
   height: 140px;
+  width: 12.5vw;
+  height: 17.5vw;
   min-width: 32px;
+  min-height: 44px;
 
   font-size: 3rem;
   font-size: clamp(0.75rem, 4vw, 3rem);
@@ -20,14 +23,6 @@
   color: black;
 
   position: relative;
-}
-
-@supports (aspect-ratio: 2.5 / 3.5) {
-  .card {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 2.5 / 3.5;
-  }
 }
 
 .diamonds,
