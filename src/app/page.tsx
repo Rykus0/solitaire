@@ -77,6 +77,12 @@ export default function Home() {
           const newStacks = prevStacks.map((stack) => stack.slice());
           const movedCards = newStacks[parentStackIndex].splice(cardIndex);
 
+          if (newStacks[parentStackIndex].length) {
+            newStacks[parentStackIndex][
+              newStacks[parentStackIndex].length - 1
+            ].flip();
+          }
+
           newStacks[stackIndex] = newStacks[stackIndex].concat(movedCards);
           return newStacks;
         });
