@@ -73,6 +73,10 @@ export class PlayingCard {
     return `${this.value}`;
   }
 
+  isEqualTo(card: PlayingCard): boolean {
+    return this.value === card.getValue() && this.suit === card.getSuit();
+  }
+
   flip() {
     this.faceUp = !this.faceUp;
   }
