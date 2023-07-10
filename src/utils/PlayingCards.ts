@@ -1,5 +1,30 @@
 import shuffle from "./shuffle";
 
+export enum CardSuit {
+  Hearts,
+  Clubs,
+  Diamonds,
+  Spades,
+}
+
+export enum CardValue {
+  Ace = 1,
+  Two,
+  Three,
+  Four,
+  Five,
+  Six,
+  Seven,
+  Eight,
+  Nine,
+  Ten,
+  Jack,
+  Queen,
+  King,
+}
+
+type CardColor = "black" | "red";
+
 export class PlayingCard {
   private value: CardValue = CardValue.Ace;
   private suit: CardSuit = CardSuit.Hearts;
@@ -52,31 +77,6 @@ export class PlayingCard {
     this.faceUp = !this.faceUp;
   }
 }
-
-export enum CardSuit {
-  Hearts,
-  Clubs,
-  Diamonds,
-  Spades,
-}
-
-export enum CardValue {
-  Ace = 1,
-  Two,
-  Three,
-  Four,
-  Five,
-  Six,
-  Seven,
-  Eight,
-  Nine,
-  Ten,
-  Jack,
-  Queen,
-  King,
-}
-
-type CardColor = "black" | "red";
 
 export class Deck {
   private cards: PlayingCard[] = [];
