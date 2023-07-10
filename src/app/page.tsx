@@ -27,8 +27,11 @@ const STACK_COUNT = 7;
 //   - drag cards
 //   - placeholder card to show drop target
 
+// TODO: use grid for layout
+
 export default function Home() {
   const deck = useRef<Deck>(new Deck());
+  const [drawnCards, setDrawnCards] = useState<PlayingCard[]>([]);
   const [stacks, setStacks] = useState<PlayingCard[][]>(new Array(STACK_COUNT));
 
   // TODO: alternately use click to pick up and drop card(s)
@@ -80,6 +83,21 @@ export default function Home() {
     }
   }
 
+  function draw() {
+    if (deck.current.count()) {
+      setDrawnCards((prevCards) => {
+        const cards = deck.current.draw(3);
+        cards.forEach((card) => card.flip());
+        return prevCards.concat(cards);
+      });
+    } else {
+      const cards = Array.from(drawnCards);
+      cards.forEach((card) => card.flip());
+      deck.current = new Deck(cards);
+      setDrawnCards([]);
+    }
+  }
+
   function placeholder() {}
 
   useEffect(() => {
@@ -98,12 +116,7 @@ export default function Home() {
 
   return (
     <main className={classes.main}>
-      <div className={classes.board}>
-        <Stack onDragOver={placeholder} onDrop={placeholder} />
-        <Stack onDragOver={placeholder} onDrop={placeholder} />
-        <Stack onDragOver={placeholder} onDrop={placeholder} />
-        <Stack onDragOver={placeholder} onDrop={placeholder} />
-      </div>
+      <div className={classes.board}></div>
       <div className={classes.board}>
         {stacks.map((stack, index) => (
           <Stack
@@ -111,12 +124,16 @@ export default function Home() {
             cards={stack}
             onDrop={dropCard}
             canStack={rules.canStack}
-              />
-            ))}
+          />
+        ))}
       </div>
-      <div className={classes.board}>
-        <Stack onDragOver={placeholder} onDrop={placeholder} />
-        <Stack onDragOver={placeholder} onDrop={placeholder} />
+      <div className={classes.board} style={{ width: "25%" }}>
+        <button onClick={draw}>draw</button>
+        <Stack
+          onDrop={placeholder}
+          canStack={() => false}
+          cards={drawnCards.slice(drawnCards.length - 3)}
+        />
       </div>
     </main>
   );
