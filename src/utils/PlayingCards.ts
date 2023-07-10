@@ -81,8 +81,14 @@ export class PlayingCard {
     return this._faceUp;
   }
 
-  flip() {
-    this._faceUp = !this._faceUp;
+  flip(direction?: "up" | "down") {
+    if (direction === "up") {
+      this._faceUp = true;
+    } else if (direction === "down") {
+      this._faceUp = false;
+    } else {
+      this._faceUp = !this._faceUp;
+    }
   }
 }
 
