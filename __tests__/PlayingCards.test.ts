@@ -19,6 +19,15 @@ describe("Card", () => {
     expect(myCard.getSuit()).toBe(CardSuit.Hearts);
   });
 
+  it("can be compared to other cards", () => {
+    const ace = new PlayingCard(CardValue.Ace, CardSuit.Hearts);
+    const jack = new PlayingCard(CardValue.Jack, CardSuit.Hearts);
+    const ace2 = new PlayingCard(CardValue.Ace, CardSuit.Hearts, true);
+
+    expect(ace.isEqualTo(ace2)).toBe(true);
+    expect(ace.isEqualTo(jack)).toBe(false);
+  });
+
   it("should display face cards and aces by the first letter", () => {
     const ace = new PlayingCard(CardValue.Ace, CardSuit.Hearts);
     const jack = new PlayingCard(CardValue.Jack, CardSuit.Hearts);
