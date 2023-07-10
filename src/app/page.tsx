@@ -35,17 +35,9 @@ export default function Home() {
   // TODO: use menu-style keyboard controls to navigate cards
   // TODO: use enter to pick up and drop focused card and following siblings
 
-  function dragCardStart(e: DragEvent<HTMLDivElement>) {
-    const target = e.target as HTMLDivElement;
-    e.dataTransfer.clearData();
-    // TODO: pass card data as JSON?
-    e.dataTransfer.setData("text/plain", target.id);
-  }
-
   function dragOver(e: DragEvent<HTMLDivElement>) {
-    const cardId = e.dataTransfer?.getData("text");
-    const cardEl = document.getElementById(cardId) as HTMLElement;
-    const card = getCardFromEl(cardEl);
+    const cardData = e.dataTransfer?.getData("text");
+    const card = JSON.parse(cardData) as PlayingCard;
 
     const targetStack = e.currentTarget as HTMLDivElement;
     const topCard = getCardFromEl(targetStack.lastChild as HTMLElement);
@@ -114,16 +106,13 @@ export default function Home() {
       </div>
       <div className={classes.board}>
         {stacks.map((stack, index) => (
-          <Stack key={`stack-${index}`} onDragOver={dragOver} onDrop={dropCard}>
-            {stack.map((card) => (
-              <Card
-                key={card.getCardName()}
-                card={card}
-                onDragStart={dragCardStart}
+          <Stack
+            key={`stack-${index}`}
+            cards={stack}
+            onDrop={dropCard}
+            canStack={rules.canStack}
               />
             ))}
-          </Stack>
-        ))}
       </div>
       <div className={classes.board}>
         <Stack onDragOver={placeholder} onDrop={placeholder} />
