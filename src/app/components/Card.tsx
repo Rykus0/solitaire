@@ -10,8 +10,8 @@ type CardProps = {
 
 export default function Card(props: CardProps) {
   const id = useId();
-  const faceUp = props.card.getFaceUp();
-  const suit = props.card.getSuit();
+  const faceUp = props.card.faceUp;
+  const suit = props.card.suit;
   const className = faceUp
     ? classes[CardSuit[suit].toLowerCase()]
     : classes.back;
@@ -27,9 +27,9 @@ export default function Card(props: CardProps) {
       className={className}
       draggable={faceUp ? "true" : "false"}
       onDragStart={faceUp ? dragStart : undefined}
-      aria-label={faceUp ? props.card.getCardName() : "Face down card"}
+      aria-label={faceUp ? props.card.name : "Face down card"}
     >
-      {faceUp && props.card.getDisplayValue()}
+      {faceUp && props.card.displayValue}
     </div>
   );
 }

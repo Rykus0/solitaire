@@ -36,7 +36,7 @@ export default function Stack(props: PropsWithChildren<StackProps>) {
       style={{ gridArea: props.gridArea }}
     >
       {props.cards?.map((card) => (
-        <Card key={card.getCardName()} card={card} />
+        <Card key={card.name} card={card} />
       ))}
     </div>
   );

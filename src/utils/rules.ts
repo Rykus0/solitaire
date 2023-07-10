@@ -3,21 +3,17 @@ import { PlayingCard, CardValue } from "./PlayingCards";
 export function canStack(card: PlayingCard, targetCard?: PlayingCard) {
   if (targetCard) {
     return (
-      card.getValue() === targetCard.getValue() - 1 &&
-      card.getColor() !== targetCard.getColor()
+      card.value === targetCard.value - 1 && card.color !== targetCard.color
     );
   }
 
-  return card.getValue() === CardValue.King;
+  return card.value === CardValue.King;
 }
 
 export function canStackOnAce(card: PlayingCard, targetCard?: PlayingCard) {
   if (targetCard) {
-    return (
-      card.getValue() === targetCard.getValue() + 1 &&
-      card.getSuit() === targetCard.getSuit()
-    );
+    return card.value === targetCard.value + 1 && card.suit === targetCard.suit;
   }
 
-  return card.getValue() === CardValue.Ace;
+  return card.value === CardValue.Ace;
 }

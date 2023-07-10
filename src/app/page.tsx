@@ -60,11 +60,11 @@ export default function Home() {
     }
 
     // If coming from foundation, it would be the last card
-    const foundationCard = foundation[card.getSuit()].slice(-1)[0];
+    const foundationCard = foundation[card.suit].slice(-1)[0];
     if (foundationCard && card.isEqualTo(foundationCard)) {
       setFoundation((prevFoundation) => ({
         ...prevFoundation,
-        [card.getSuit()]: prevFoundation[card.getSuit()].slice(0, -1),
+        [card.suit]: prevFoundation[card.suit].slice(0, -1),
       }));
       return [foundationCard];
     }
