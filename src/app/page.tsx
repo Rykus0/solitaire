@@ -43,6 +43,27 @@ export default function Home() {
   // TODO: use menu-style keyboard controls to navigate cards
   // TODO: use enter to pick up and drop focused card and following siblings
 
+  function newGame() {
+    deck.current = new Deck();
+    deck.current.shuffle();
+    const stacks = new Array(STACK_COUNT);
+
+    for (let i = 0; i < STACK_COUNT; i++) {
+      const stackSize = i + 1;
+      stacks[i] = deck.current.draw(stackSize);
+      stacks[i][stackSize - 1].flip("up");
+    }
+
+    setTableau(stacks);
+    setWastepile([]);
+    setFoundation({
+      [CardSuit.Hearts]: [],
+      [CardSuit.Clubs]: [],
+      [CardSuit.Diamonds]: [],
+      [CardSuit.Spades]: [],
+    });
+  }
+
   function removeCardsFromState(card: PlayingCard): PlayingCard[] {
     // If coming from wastepile, it would be the last card
     const pileCard = wastepile.slice(-1)[0];
@@ -154,21 +175,14 @@ export default function Home() {
   function placeholder() {}
 
   useEffect(() => {
-    deck.current = new Deck();
-    deck.current.shuffle();
-    const stacks = new Array(STACK_COUNT);
-
-    for (let i = 0; i < STACK_COUNT; i++) {
-      const stackSize = i + 1;
-      stacks[i] = deck.current.draw(stackSize);
-      stacks[i][stackSize - 1].flip("up");
-    }
-
-    setTableau(stacks);
+    newGame();
   }, []);
 
   return (
     <main className={classes.main}>
+      <div style={{ gridArea: "nav" }}>
+        <button onClick={newGame}>New Game</button>
+      </div>
       <Stack
         onDrop={dropCardInFoundation}
         canStack={rules.canStackOnAce}
