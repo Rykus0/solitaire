@@ -72,7 +72,7 @@ export default function Home() {
     // - can skip empty
     // - only need to check face up
     for (let i = 0; i < tableau.length; i++) {
-      for (let j = 0; j < tableau[i].length; j++) {
+      for (let j = tableau[i].length; --j >= 0; ) {
         if (card.isFaceUp() && card.isEqualTo(tableau[i][j])) {
           setTableau((prevStacks) => {
             const newStacks = prevStacks.map((stack) => stack.slice());
