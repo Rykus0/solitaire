@@ -143,7 +143,7 @@ export default function Home() {
         cards[cards.length - 1].flip("up");
         return cards;
       });
-    } else {
+    } else if (wastepile.length) {
       const cards = Array.from(wastepile);
       cards.forEach((card) => card.flip("down"));
       deck.current = new Deck(cards);
