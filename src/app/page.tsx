@@ -13,8 +13,8 @@ const STACK_COUNT = 7;
 // - undo
 // - new game
 // - timer?
+// - win condition
 // - Move counter
-// - ace stacks
 // - card interactions
 //   - point and click
 //   - keyboard
@@ -180,6 +180,10 @@ export default function Home() {
 
   return (
     <main className={classes.main}>
+      {Object.values(foundation).reduce(
+        (total, cards) => total + cards.length,
+        0
+      ) === 52 && <div className={classes.win}>You win!</div>}
       <div style={{ gridArea: "nav" }}>
         <button onClick={newGame}>New Game</button>
       </div>
