@@ -127,3 +127,23 @@ export class Deck {
     return this.cards.length;
   }
 }
+
+export function newDeck() {
+  let deck: PlayingCard[] = [];
+
+  Object.values(CardSuit)
+    .filter((v) => !isNaN(Number(v)))
+    .forEach((suit) => {
+      Object.values(CardValue)
+        .filter((v) => !isNaN(Number(v)))
+        .forEach((value) => {
+          deck.push(new PlayingCard(value as CardValue, suit as CardSuit));
+        });
+    });
+
+  return deck;
+}
+
+export function shuffleDeck(deck: PlayingCard[]) {
+  return shuffle(deck);
+}

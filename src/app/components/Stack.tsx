@@ -3,10 +3,8 @@ import { PlayingCard } from "../../utils/PlayingCards";
 import classes from "./Stack.module.css";
 import Card from "./Card";
 
-// TODO: add direction and spread (boolean) props
-
 type StackProps = {
-  cards?: PlayingCard[];
+  cards: PlayingCard[];
   onDrop: (e: DragEvent<HTMLDivElement>) => void;
   canStack: (card: PlayingCard, topCard?: PlayingCard) => boolean;
   direction: "row" | "column" | "none";
@@ -20,7 +18,7 @@ export default function Stack(props: PropsWithChildren<StackProps>) {
   function dragOver(e: DragEvent<HTMLDivElement>) {
     const cardJSON = e.dataTransfer?.getData("text/json");
     const card = PlayingCard.fromJSON(cardJSON);
-    const topCard = props.cards && props.cards[props.cards.length - 1];
+    const topCard = props.cards[props.cards.length - 1];
 
     if (card && props.canStack(card, topCard)) {
       e.preventDefault();
@@ -35,7 +33,7 @@ export default function Stack(props: PropsWithChildren<StackProps>) {
       onDrop={props.onDrop}
       style={{ gridArea: props.gridArea }}
     >
-      {props.cards?.map((card) => (
+      {props.cards.map((card) => (
         <Card key={card.name} card={card} />
       ))}
     </div>
