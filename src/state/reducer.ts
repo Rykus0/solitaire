@@ -40,6 +40,23 @@ type Action =
 
 type GameState = "playing" | "won" | "stuck";
 
+type CardLocation =
+  | {
+      location: "wastepile";
+      stackIndex: number;
+      cardIndex: number;
+    }
+  | {
+      location: "tableau";
+      stackIndex: number;
+      cardIndex: number;
+    }
+  | {
+      location: "foundation";
+      stackIndex: keyof State["foundation"];
+      cardIndex: number;
+    };
+
 const STACK_COUNT = 7;
 let history: State[] = [];
 
@@ -70,15 +87,11 @@ export function reducer(state: State = initialState, action: Action): State {
         tableau[i][stackSize - 1].flip("up");
       }
 
-      const newGameState = {
+      return setHistory({
         ...initialState,
         deck,
         tableau,
-      };
-
-      history.push(newGameState);
-
-      return newGameState;
+      });
 
     // ----------------------------
 
@@ -87,16 +100,16 @@ export function reducer(state: State = initialState, action: Action): State {
       const cardSource = getCardLocation(state, card);
       const cardsToMove = getCardsFromLocation(state, cardSource);
 
-      const removed = {
+      const removedState = {
         ...state,
         // Problem - these can be the same - 2 separate updates
         [cardSource.location]: removeCardsFromLocation(state, cardSource),
       };
 
-      const removedAndAdded = {
-        ...removed,
+      return setHistory({
+        ...removedState,
         [to]: addCardsToLocation(
-          removed,
+          removedState,
           {
             location: to,
             stackIndex: index,
@@ -104,11 +117,7 @@ export function reducer(state: State = initialState, action: Action): State {
           },
           cardsToMove
         ),
-      };
-
-      history.push(removedAndAdded);
-
-      return removedAndAdded;
+      });
 
     // ----------------------------
 
@@ -126,15 +135,11 @@ export function reducer(state: State = initialState, action: Action): State {
         drawnCards = [];
       }
 
-      const drawState = {
+      return setHistory({
         ...state,
         deck: deckAfterDraw,
         wastepile: drawnCards,
-      };
-
-      history.push(drawState);
-
-      return drawState;
+      });
 
     // ----------------------------
 
@@ -152,22 +157,31 @@ export function reducer(state: State = initialState, action: Action): State {
   }
 }
 
-type CardLocation =
-  | {
-      location: "wastepile";
-      stackIndex: number;
-      cardIndex: number;
-    }
-  | {
-      location: "tableau";
-      stackIndex: number;
-      cardIndex: number;
-    }
-  | {
-      location: "foundation";
-      stackIndex: keyof State["foundation"];
-      cardIndex: number;
-    };
+function setHistory(state: State) {
+  const newState = JSON.parse(JSON.stringify(state));
+
+  newState.deck = state.deck.map((card) =>
+    PlayingCard.fromJSON(JSON.stringify(card))
+  );
+
+  newState.wastepile = state.wastepile.map((card) =>
+    PlayingCard.fromJSON(JSON.stringify(card))
+  );
+
+  newState.tableau = state.tableau.map((stack) =>
+    stack.map((card) => PlayingCard.fromJSON(JSON.stringify(card)))
+  );
+
+  for (const suit in state.foundation) {
+    newState.foundation[suit] = state.foundation[
+      suit as unknown as CardSuit
+    ].map((card) => PlayingCard.fromJSON(JSON.stringify(card)));
+  }
+
+  history.push(newState);
+
+  return state;
+}
 
 function getCardLocation(state: State, card: PlayingCard): CardLocation {
   const pileCard = state.wastepile.slice(-1)[0];
