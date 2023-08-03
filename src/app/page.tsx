@@ -134,10 +134,9 @@ export default function Home() {
         />
       ))}
 
-      <div style={{ gridArea: "deck" }}>
-        <button onClick={draw}>draw</button>
-        <button onClick={undo}>Undo</button>
-      </div>
+      <button onClick={draw} style={{ gridArea: "deck" }}>
+        draw
+      </button>
       <Stack
         onDrop={() => null}
         canStack={() => false}
@@ -145,6 +144,9 @@ export default function Home() {
         direction="row"
         gridArea="draw"
       />
+      <button onClick={undo} style={{ gridArea: "undo" }}>
+        ↶ Undo
+      </button>
     </main>
   );
 }
