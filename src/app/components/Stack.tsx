@@ -17,10 +17,10 @@ export default function Stack(props: PropsWithChildren<StackProps>) {
 
   function dragOver(e: DragEvent<HTMLDivElement>) {
     const cardJSON = e.dataTransfer?.getData("text/json");
-    const card = PlayingCard.fromJSON(cardJSON);
+    const draggedCard = PlayingCard.fromJSON(cardJSON);
     const topCard = props.cards[props.cards.length - 1];
 
-    if (card && props.canStack(card, topCard)) {
+    if (draggedCard && props.canStack(draggedCard, topCard)) {
       e.preventDefault();
     }
   }
