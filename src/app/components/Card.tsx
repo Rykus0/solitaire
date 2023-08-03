@@ -1,5 +1,5 @@
 import { type DragEvent, useId } from "react";
-import { PlayingCard as PlayingCard, CardSuit } from "../../utils/PlayingCards";
+import { PlayingCard, CardSuit } from "../../utils/PlayingCards";
 import classes from "./Card.module.css";
 
 type CardProps = {
