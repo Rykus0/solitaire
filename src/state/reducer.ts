@@ -1,5 +1,4 @@
 import {
-  Deck,
   PlayingCard,
   CardSuit,
   newDeck,
@@ -17,6 +16,7 @@ export enum ActionType {
   newGame = "NEW_GAME",
   moveCard = "MOVE_CARD",
   draw = "DRAW",
+  undo = "UNDO",
 }
 
 type Action =
@@ -33,12 +33,15 @@ type Action =
     }
   | {
       type: ActionType.draw;
+    }
+  | {
+      type: ActionType.undo;
     };
 
 type GameState = "playing" | "won" | "stuck";
 
 const STACK_COUNT = 7;
-let history = [];
+let history: State[] = [];
 
 export const initialState: State = {
   deck: newDeck(),
@@ -67,11 +70,15 @@ export function reducer(state: State = initialState, action: Action): State {
         tableau[i][stackSize - 1].flip("up");
       }
 
-      return {
+      const newGameState = {
         ...initialState,
         deck,
         tableau,
       };
+
+      history.push(newGameState);
+
+      return newGameState;
 
     // ----------------------------
 
@@ -99,6 +106,8 @@ export function reducer(state: State = initialState, action: Action): State {
         ),
       };
 
+      history.push(removedAndAdded);
+
       return removedAndAdded;
 
     // ----------------------------
@@ -117,11 +126,26 @@ export function reducer(state: State = initialState, action: Action): State {
         drawnCards = [];
       }
 
-      return {
+      const drawState = {
         ...state,
         deck: deckAfterDraw,
         wastepile: drawnCards,
       };
+
+      history.push(drawState);
+
+      return drawState;
+
+    // ----------------------------
+
+    case ActionType.undo:
+      if (history.length > 1) {
+        history.pop();
+      }
+
+      return history[history.length - 1];
+
+    // ----------------------------
 
     default:
       return state;

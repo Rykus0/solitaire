@@ -75,6 +75,12 @@ export default function Home() {
     });
   }
 
+  function undo() {
+    dispatch({
+      type: ActionType.undo,
+    });
+  }
+
   useEffect(() => {
     newGame();
   }, []);
@@ -128,9 +134,10 @@ export default function Home() {
         />
       ))}
 
-      <button onClick={draw} style={{ gridArea: "deck" }}>
-        draw
-      </button>
+      <div style={{ gridArea: "deck" }}>
+        <button onClick={draw}>draw</button>
+        <button onClick={undo}>Undo</button>
+      </div>
       <Stack
         onDrop={() => null}
         canStack={() => false}
