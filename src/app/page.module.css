@@ -13,3 +13,7 @@
 
   background: #fff;
 }
+
+.main > button {
+  height: 100%;
+}
