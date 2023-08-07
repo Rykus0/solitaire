@@ -98,6 +98,7 @@ export default function Home() {
         onDrop={dropCardInFoundation}
         canStack={rules.canStackOnAce}
         cards={state.foundation[CardSuit.Hearts]}
+        background={CardSuit.Hearts}
         direction="none"
         gridArea="suit1"
       />
@@ -105,6 +106,7 @@ export default function Home() {
         onDrop={dropCardInFoundation}
         canStack={rules.canStackOnAce}
         cards={state.foundation[CardSuit.Clubs]}
+        background={CardSuit.Clubs}
         direction="none"
         gridArea="suit2"
       />
@@ -112,6 +114,7 @@ export default function Home() {
         onDrop={dropCardInFoundation}
         canStack={rules.canStackOnAce}
         cards={state.foundation[CardSuit.Diamonds]}
+        background={CardSuit.Diamonds}
         direction="none"
         gridArea="suit3"
       />
@@ -119,6 +122,7 @@ export default function Home() {
         onDrop={dropCardInFoundation}
         canStack={rules.canStackOnAce}
         cards={state.foundation[CardSuit.Spades]}
+        background={CardSuit.Spades}
         direction="none"
         gridArea="suit4"
       />

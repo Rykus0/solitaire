@@ -3,6 +3,7 @@
 
   width: 100%;
   height: 100%;
+  padding: 10px;
   min-width: 32px;
   min-height: max(44px, 17.5vw);
 
@@ -38,4 +39,52 @@
   top: 0;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.placeholder {
+  background: transparent;
+}
+
+.hearts,
+.diamonds,
+.clubs,
+.spades {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  outline-color: transparent;
+}
+
+.diamonds,
+.hearts {
+  color: red;
+}
+
+.clubs,
+.spades {
+  color: black;
+}
+
+.hearts::before,
+.diamonds::before,
+.clubs::before,
+.spades::before {
+  font-size: 8rem;
+}
+
+.diamonds::before {
+  content: "♦";
+}
+
+.hearts::before {
+  content: "♥";
+}
+
+.clubs::before {
+  content: "♣";
+}
+
+.spades::before {
+  content: "♠";
 }

@@ -1,5 +1,5 @@
 import { type PropsWithChildren, type DragEvent, useId } from "react";
-import { PlayingCard } from "../../utils/PlayingCards";
+import { CardSuit, PlayingCard } from "../../utils/PlayingCards";
 import classes from "./Stack.module.css";
 import Card from "./Card";
 
@@ -8,12 +8,17 @@ type StackProps = {
   onDrop: (e: DragEvent<HTMLDivElement>) => void;
   canStack: (card: PlayingCard, topCard?: PlayingCard) => boolean;
   direction: "row" | "column" | "none";
+  background?: CardSuit;
   gridArea?: string;
 };
 
 export default function Stack(props: PropsWithChildren<StackProps>) {
   const id = useId();
   const { direction = "column" } = props;
+  const background =
+    props.background !== undefined && props.background in CardSuit
+      ? CardSuit[props.background].toLowerCase()
+      : "placeholder";
 
   function dragOver(e: DragEvent<HTMLDivElement>) {
     const cardJSON = e.dataTransfer?.getData("text/json");
@@ -28,7 +33,7 @@ export default function Stack(props: PropsWithChildren<StackProps>) {
   return (
     <div
       id={id}
-      className={classes[direction]}
+      className={[classes[direction], classes[background]].join(" ")}
       onDragOver={dragOver}
       onDrop={props.onDrop}
       style={{ gridArea: props.gridArea }}
