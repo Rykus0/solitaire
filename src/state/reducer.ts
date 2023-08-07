@@ -87,26 +87,34 @@ export function reducer(state: State = initialState, action: Action): State {
         tableau[i][stackSize - 1].flip("up");
       }
 
-      return setHistory({
-        ...initialState,
+      const newGameState = {
+        ...copyState(initialState),
         deck,
         tableau,
-      });
+      };
+
+      history.push(newGameState);
+
+      return newGameState;
 
     // ----------------------------
 
     case ActionType.moveCard:
       const { to, card, index } = action.payload;
-      const cardSource = getCardLocation(state, card);
-      const cardsToMove = getCardsFromLocation(state, cardSource);
+      const baseStateMove = copyState(state);
+      const cardSource = getCardLocation(baseStateMove, card);
+      const cardsToMove = getCardsFromLocation(baseStateMove, cardSource);
 
       const removedState = {
-        ...state,
+        ...baseStateMove,
         // Problem - these can be the same - 2 separate updates
-        [cardSource.location]: removeCardsFromLocation(state, cardSource),
+        [cardSource.location]: removeCardsFromLocation(
+          baseStateMove,
+          cardSource
+        ),
       };
 
-      return setHistory({
+      const moveState = {
         ...removedState,
         [to]: addCardsToLocation(
           removedState,
@@ -117,15 +125,20 @@ export function reducer(state: State = initialState, action: Action): State {
           },
           cardsToMove
         ),
-      });
+      };
+
+      history.push(moveState);
+
+      return moveState;
 
     // ----------------------------
 
     case ActionType.draw:
-      let drawnCards: PlayingCard[] = Array.from(state.wastepile);
-      let deckAfterDraw = [...state.deck];
+      const baseStateDraw = copyState(state);
+      let drawnCards: PlayingCard[] = Array.from(baseStateDraw.wastepile);
+      let deckAfterDraw = [...baseStateDraw.deck];
 
-      if (state.deck.length) {
+      if (baseStateDraw.deck.length) {
         drawnCards = drawnCards.concat(deckAfterDraw.splice(0, 3));
         drawnCards.forEach((card) => card.flip("down"));
         drawnCards[drawnCards.length - 1].flip("up");
@@ -135,11 +148,15 @@ export function reducer(state: State = initialState, action: Action): State {
         drawnCards = [];
       }
 
-      return setHistory({
-        ...state,
+      const drawState = {
+        ...baseStateDraw,
         deck: deckAfterDraw,
         wastepile: drawnCards,
-      });
+      };
+
+      history.push(drawState);
+
+      return drawState;
 
     // ----------------------------
 
@@ -148,7 +165,7 @@ export function reducer(state: State = initialState, action: Action): State {
         history.pop();
       }
 
-      return history[history.length - 1];
+      return copyState(history[history.length - 1]);
 
     // ----------------------------
 
@@ -157,7 +174,7 @@ export function reducer(state: State = initialState, action: Action): State {
   }
 }
 
-function setHistory(state: State) {
+function copyState(state: State) {
   const newState = JSON.parse(JSON.stringify(state));
 
   newState.deck = state.deck.map((card) =>
@@ -178,9 +195,7 @@ function setHistory(state: State) {
     ].map((card) => PlayingCard.fromJSON(JSON.stringify(card)));
   }
 
-  history.push(newState);
-
-  return state;
+  return newState;
 }
 
 function getCardLocation(state: State, card: PlayingCard): CardLocation {
