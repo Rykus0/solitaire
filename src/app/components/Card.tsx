@@ -1,4 +1,4 @@
-import { type DragEvent, useId } from "react";
+import { type DragEvent, type MouseEvent, useId } from "react";
 import { PlayingCard, CardSuit } from "../../utils/PlayingCards";
 import classes from "./Card.module.css";
 
@@ -6,6 +6,7 @@ type CardProps = {
   card: PlayingCard;
   dragging?: boolean;
   onDragStart?: (e: DragEvent<HTMLDivElement>) => void;
+  autoFoundation?: (arg0: PlayingCard) => void;
 };
 
 export default function Card(props: CardProps) {
@@ -21,12 +22,17 @@ export default function Card(props: CardProps) {
     e.dataTransfer.setData("text/json", JSON.stringify(props.card));
   }
 
+  function onDoubleClick(e: MouseEvent<HTMLDivElement>) {
+    props.autoFoundation?.(props.card);
+  }
+
   return (
     <div
       id={id}
       className={className}
       draggable={faceUp ? "true" : "false"}
       onDragStart={faceUp ? dragStart : undefined}
+      onDoubleClick={onDoubleClick}
       aria-label={faceUp ? props.card.name : "Face down card"}
     >
       {faceUp && props.card.displayValue}

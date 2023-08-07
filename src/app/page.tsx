@@ -69,6 +69,17 @@ export default function Home() {
     }
   }
 
+  function autoFoundation(card: PlayingCard) {
+    const foundationTop = state.foundation[card.suit].slice(-1)[0];
+
+    if (rules.canStackOnAce(card, foundationTop)) {
+      dispatch({
+        type: ActionType.moveCard,
+        payload: { card, to: "foundation", index: card.suit },
+      });
+    }
+  }
+
   function draw() {
     dispatch({
       type: ActionType.draw,
@@ -91,9 +102,11 @@ export default function Home() {
         (total, cards) => total + cards.length,
         0
       ) === 52 && <div className={classes.win}>You win!</div>}
+
       <div style={{ gridArea: "nav" }}>
         <button onClick={newGame}>New Game</button>
       </div>
+
       <Stack
         onDrop={dropCardInFoundation}
         canStack={rules.canStackOnAce}
@@ -135,6 +148,7 @@ export default function Home() {
           canStack={rules.canStack}
           direction="column"
           gridArea={`col${index + 1}`}
+          autoFoundation={autoFoundation}
         />
       ))}
 
@@ -147,6 +161,7 @@ export default function Home() {
         cards={state.wastepile.slice(-3)}
         direction="row"
         gridArea="draw"
+        autoFoundation={autoFoundation}
       />
       <button onClick={undo} style={{ gridArea: "undo" }}>
         ↶ Undo

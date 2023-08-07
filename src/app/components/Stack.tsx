@@ -10,6 +10,7 @@ type StackProps = {
   direction: "row" | "column" | "none";
   background?: CardSuit;
   gridArea?: string;
+  autoFoundation?: (arg0: PlayingCard) => void;
 };
 
 export default function Stack(props: PropsWithChildren<StackProps>) {
@@ -39,7 +40,11 @@ export default function Stack(props: PropsWithChildren<StackProps>) {
       style={{ gridArea: props.gridArea }}
     >
       {props.cards.map((card) => (
-        <Card key={card.name} card={card} />
+        <Card
+          key={card.name}
+          card={card}
+          autoFoundation={props.autoFoundation}
+        />
       ))}
     </div>
   );
