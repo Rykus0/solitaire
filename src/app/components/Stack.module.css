@@ -8,7 +8,6 @@
   min-height: max(44px, 17.5vw);
 
   position: relative;
-  outline: 1px solid red;
   overflow: hidden;
 }
 
@@ -52,8 +51,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
-  outline-color: transparent;
 }
 
 .diamonds,
