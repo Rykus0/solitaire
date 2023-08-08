@@ -4,10 +4,11 @@
   align-items: center;
   justify-content: center;
 
+  aspect-ratio: 2.5 / 3.5;
   width: 100px;
   height: 140px;
-  width: 12.5vw;
-  height: 17.5vw;
+  width: 100%;
+  height: auto;
   min-width: 32px;
   min-height: 44px;
 
