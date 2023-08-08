@@ -67,7 +67,9 @@
 .diamonds::before,
 .clubs::before,
 .spades::before {
-  font-size: 8rem;
+  font-size: 3rem;
+  font-size: clamp(3rem, 8vw, 8rem);
+  line-height: 1;
 }
 
 .diamonds::before {
