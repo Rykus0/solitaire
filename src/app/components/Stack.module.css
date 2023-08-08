@@ -31,13 +31,13 @@
 
 .none {
   composes: stack;
+  display: grid;
+  grid-template-columns: 1fr;
 }
 
 .none > * {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  grid-row-start: 1;
+  grid-column-start: 1;
 }
 
 .placeholder {
@@ -48,7 +48,6 @@
 .diamonds,
 .clubs,
 .spades {
-  display: flex;
   align-items: center;
   justify-content: center;
 }
@@ -70,6 +69,10 @@
   font-size: 3rem;
   font-size: clamp(3rem, 8vw, 8rem);
   line-height: 1;
+
+  text-align: center;
+  grid-row-start: 1;
+  grid-column-start: 1;
 }
 
 .diamonds::before {
