@@ -1,5 +1,5 @@
 import { type PropsWithChildren, type DragEvent, useId } from "react";
-import { CardSuit, PlayingCard } from "../../utils/PlayingCards";
+import { CardSuit, CardValue, PlayingCard } from "../../utils/PlayingCards";
 import classes from "./Stack.module.css";
 import Card from "./Card";
 
@@ -22,12 +22,16 @@ export default function Stack(props: PropsWithChildren<StackProps>) {
       : "placeholder";
 
   function dragOver(e: DragEvent<HTMLDivElement>) {
-    const cardJSON = e.dataTransfer?.getData("text/json");
-    const draggedCard = PlayingCard.fromJSON(cardJSON);
-    const topCard = props.cards[props.cards.length - 1];
+    const value = getValueFromDragEvent(e);
+    const suit = getSuitFromDragEvent(e);
 
-    if (draggedCard && props.canStack(draggedCard, topCard)) {
-      e.preventDefault();
+    if (value && suit) {
+      const draggedCard = new PlayingCard(value, suit, true);
+      const topCard = props.cards[props.cards.length - 1];
+
+      if (props.canStack(draggedCard, topCard)) {
+        e.preventDefault();
+      }
     }
   }
 
@@ -48,4 +52,28 @@ export default function Stack(props: PropsWithChildren<StackProps>) {
       ))}
     </div>
   );
+}
+
+function getValueFromDragEvent(e: DragEvent<HTMLDivElement>): CardValue | null {
+  const value = e.dataTransfer.types
+    .find((type) => type.startsWith("value/"))
+    ?.split("/")[1];
+
+  if (value) {
+    return parseInt(value, 10);
+  }
+
+  return null;
+}
+
+function getSuitFromDragEvent(e: DragEvent<HTMLDivElement>): CardSuit | null {
+  const suit = e.dataTransfer.types
+    .find((type) => type.startsWith("suit/"))
+    ?.split("/")[1];
+
+  if (suit) {
+    return parseInt(suit, 10);
+  }
+
+  return null;
 }

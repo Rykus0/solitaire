@@ -20,6 +20,9 @@ export default function Card(props: CardProps) {
   function dragStart(e: DragEvent<HTMLDivElement>) {
     e.dataTransfer.clearData();
     e.dataTransfer.setData("text/json", JSON.stringify(props.card));
+    e.dataTransfer.setData(`suit/${suit}`, "");
+    e.dataTransfer.setData(`value/${props.card.value}`, "");
+    e.dataTransfer.dropEffect = "move";
   }
 
   function onDoubleClick(e: MouseEvent<HTMLDivElement>) {
