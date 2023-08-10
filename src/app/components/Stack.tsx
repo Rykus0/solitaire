@@ -26,7 +26,7 @@ export default function Stack(props: PropsWithChildren<StackProps>) {
     const value = getValueFromDragEvent(e);
     const suit = getSuitFromDragEvent(e);
 
-    if (value && suit) {
+    if (value !== null && suit !== null) {
       const draggedCard = new PlayingCard(value, suit, true);
       const topCard = props.cards[props.cards.length - 1];
 
