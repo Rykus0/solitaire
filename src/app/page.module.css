@@ -1,7 +1,7 @@
 .main {
   display: grid;
   min-height: 100dvh;
-  gap: 8px;
+  gap: 2vw;
   align-items: start;
   justify-content: start;
   grid-template-columns: repeat(7, minmax(0, 1fr));
