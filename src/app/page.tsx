@@ -103,7 +103,9 @@ export default function Home() {
         0
       ) === 52 && <div className={classes.win}>You win!</div>}
 
-      <button onClick={newGame}>New Game</button>
+      <button onClick={newGame} style={{ gridArea: "new" }}>
+        New Game
+      </button>
 
       <Stack
         onDrop={dropCardInFoundation}
