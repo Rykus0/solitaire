@@ -47,6 +47,7 @@ export default function Card(props: CardProps) {
       onDoubleClick={onDoubleClick}
       onMouseDown={onMouseDown}
       onMouseUp={onMouseUp}
+      onMouseOut={onMouseUp}
       aria-label={faceUp ? props.card.name : "Face down card"}
       style={{
         zIndex,
