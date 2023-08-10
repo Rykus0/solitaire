@@ -11,6 +11,7 @@ type StackProps = {
   background?: CardSuit;
   gridArea?: string;
   autoFoundation?: (arg0: PlayingCard) => void;
+  index?: number;
 };
 
 export default function Stack(props: PropsWithChildren<StackProps>) {
@@ -42,6 +43,7 @@ export default function Stack(props: PropsWithChildren<StackProps>) {
       onDragOver={dragOver}
       onDrop={props.onDrop}
       style={{ gridArea: props.gridArea }}
+      data-index={props.index}
     >
       {props.cards.map((card) => (
         <Card

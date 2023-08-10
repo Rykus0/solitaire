@@ -146,6 +146,7 @@ export default function Home() {
           canStack={rules.canStack}
           direction="column"
           gridArea={`col${index + 1}`}
+          index={index}
           autoFoundation={autoFoundation}
         />
       ))}
@@ -169,6 +170,7 @@ export default function Home() {
 }
 
 function getStackIndexFromEl(el?: HTMLElement) {
-  if (!el) return -1;
-  return Number(el.style.gridArea.replace("col", "")) - 1;
+  const index = el?.getAttribute("data-index") ?? "0";
+
+  return parseInt(index, 10);
 }
