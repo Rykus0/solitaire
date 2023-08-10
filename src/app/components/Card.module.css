@@ -15,7 +15,7 @@
   font-size: 3rem;
   font-size: clamp(0.75rem, 4vw, 3rem);
 
-  border: 5px solid white;
+  border: 5px solid;
   outline: 1px solid black;
   border-radius: 5px;
 
@@ -28,13 +28,13 @@
 .diamonds,
 .hearts {
   composes: card;
-  color: red;
+  color: var(--red-suit);
 }
 
 .clubs,
 .spades {
   composes: card;
-  color: black;
+  color: var(--black-suit);
 }
 
 .card::before,

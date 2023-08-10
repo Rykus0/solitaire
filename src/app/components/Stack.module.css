@@ -54,12 +54,12 @@
 
 .diamonds,
 .hearts {
-  color: red;
+  color: var(--red-suit);
 }
 
 .clubs,
 .spades {
-  color: black;
+  color: var(--black-suit);
 }
 
 .hearts::before,
