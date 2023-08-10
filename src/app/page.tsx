@@ -10,27 +10,8 @@ import classes from "./page.module.css";
 
 const STACK_COUNT = 7;
 
-// Features:
-// - undo
-// - new game
-// - timer?
-// - win condition
-// - Move counter
-// - card interactions
-//   - point and click
-//   - keyboard
-// - visuals
-//   - active card
-//   - card lift state
-//   - drag cards
-//   - placeholder card to show drop target
-
 export default function Home() {
   const [state, dispatch] = useReducer(reducer, initialState);
-
-  // TODO: alternately use click to pick up and drop card(s)
-  // TODO: use menu-style keyboard controls to navigate cards
-  // TODO: use enter to pick up and drop focused card and following siblings
 
   function newGame() {
     dispatch({ type: ActionType.newGame });
